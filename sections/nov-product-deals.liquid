@@ -1,0 +1,243 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" data-section-id="{{ section.id }}" data-section-type="nov-slick">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% else %}
+    <div class="container-fluid">
+  {% endif %}
+    {% if section.settings.heading != blank %}
+      <div class="title_section {{ section.settings.title_alignment }}">
+        <span class="title" style="color: {{ section.settings.heading_c }};">{{ section.settings.heading }}</span>
+        {% if section.settings.subheading != blank %}
+          <span class="sub_title" style="color: {{ section.settings.subheading_c }};">{{ section.settings.subheading }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="row nov-slick-carousel"
+    data-autoplay="false"
+    data-autoplayTimeout="6000"
+    data-loop="false"
+    data-dots="{{ section.settings.show_dot }}"
+    data-nav="false"
+    data-items_xxl="1" 
+    data-items="1" 
+    data-items_lg="1" 
+    data-items_md="1" 
+    data-items_sm="1"
+    data-items_xs="1">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product_handle] %}
+        {% assign variantCount = product.variants | size %}
+        {% if product != empty %}
+          <div class="col">
+            <div class="item-product mb-0 pb-65">
+              {% assign variantCount = product.variants | size %}
+              <div class="row">
+                <div class="thumbnail-container col-lg-6{% if product.images.size > 1 %} has-multiimage{% endif %}">
+                  <a href="{{ product.url | within: collection }}">
+                    <div class="respone_image" style="padding-top:{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%">
+                      {% assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                      <noscript>
+                        <img class="img-fluid product__thumbnail lazyload" data-src="{{ product.featured_image.src | img_url: '1024x' }}" alt="">
+                      </noscript>
+                      <img class="product__thumbnail lazyload"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                        alt=""
+                        data-src="{{ img_url }}"
+                        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]"
+                        data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                        data-sizes="auto"
+                        data-image>
+                      {% for image in product.images %}
+                        {% assign img_second = image.src | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                        {% if forloop.first != true %}
+                          <img id="{{ img_id }}"
+                            class="img-fluid product__thumbnail-second lazyload"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 19'%3E%3C/svg%3E"
+                            data-src="{{ img_second }}"
+                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                            data-aspectratio="{{ image.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt=""
+                            data-image>
+                            {% break %}
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </a>
+                </div>
+                <div class="product__info col-lg-6 pt-50 pt-md-80">
+                  {%- if block.settings.countdown_timeend != blank -%}
+                    {%- assign countdownTime = block.settings.countdown_timeend -%}
+                    <div class="countdownfree mb-40" data-countdown="{{ countdownTime }}"></div>
+                  {%- endif -%}
+                  <div class="product__title mb-15">
+                    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+                  </div>
+                  {% if settings.show_rating %}
+                    <div class="product__review">
+                      <div class="rating"><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+                    </div>
+                  {% endif %}
+                  <div class="product__price">
+                    {% include 'product-price' %}
+                  </div>
+                  <div class="desc mt-20 mb-0">{{ product.description | strip_html | truncate: 200 }}</div>
+                  <div class="group-buttons d-flex mt-60 mt-lg-30">
+                    {% include 'addtocart-buttons' %}
+                    {% if settings.wishlist_enable %}
+                      {% include 'nov-wishlist' %}
+                    {% endif %}
+                    {% if settings.quickview_enable %}
+                      {% include 'nov-quickview' %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Product Deals",
+  "class": "index-section section-product-deals wow fadeInUp animated",
+  "settings":[
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Vinova Product Deals</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_c",
+      "label": "Heading color",
+      "default": "#222222"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Sub heading",
+      "default": "<p>Subtitle from happy customers</p>"
+    },
+    {
+      "type": "color",
+      "id": "subheading_c",
+      "label": "Sub heading color",
+      "default": "#666666"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Heading alignment",
+      "default": "text-left",
+      "options": [
+        {
+          "value": "text-left",
+          "label": "Left"
+        },
+        {
+          "value": "text-center",
+          "label": "Center"
+        },
+        {
+          "value": "text-right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Slider options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dot",
+      "label": "Show dot",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Design options"
+    },
+    {
+      "type": "checkbox",
+      "id": "has_fullwidth",
+      "label": "Full width",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colors"
+    },
+    {
+      "type": "text",
+      "id": "class",
+      "label": "Class"
+    },
+    {
+      "type": "number",
+      "id": "distance_top",
+      "label": "Top spacing section (px)",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "distance_bottom",
+      "label": "Bottom spacing section (px)",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "productcountdownlist",
+      "name": "Product Item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product_handle",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "Countdown time"
+        },
+        {
+          "type": "text",
+          "id": "countdown_timeend",
+          "label": "Time end product",
+          "placeholder": "YYYY\/MM\/DD"
+        },
+        {
+          "type": "paragraph",
+          "content": "Format: 'Year\/Month\/Day'"
+        },
+        {
+          "type": "paragraph",
+          "content": "Example: '2019\/01\/30'"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Product Deals",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }}px;
+    padding-bottom: {{ section.settings.distance_bottom }}px;
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+  }
+</style>

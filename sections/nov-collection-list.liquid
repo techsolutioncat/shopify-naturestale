@@ -1,0 +1,261 @@
+{% if section.settings.grid_number_xxl == 5 %}
+  {%- assign xxl = 'col-xxl-cus-5' -%}
+{% else %}
+  {%- assign xxl = 12 | divided_by: section.settings.grid_number_xxl | prepend: 'col-xxl-' -%}
+{% endif %}
+{% if section.settings.grid_number == 5 %}
+  {%- assign xl = 'col-xl-cus-5' -%}
+{% else %}
+  {%- assign xl = 12 | divided_by: section.settings.grid_number | prepend: 'col-xl-' -%}
+{% endif %}
+{% if section.settings.grid_number_lg == 5 %}
+  {%- assign lg = 'col-lg-cus-5' -%}
+{% else %}
+  {%- assign lg = 12 | divided_by: section.settings.grid_number_lg | prepend: 'col-lg-' -%}
+{% endif %}
+{% if section.settings.grid_number_md == 5 %}
+  {%- assign md = 'col-md-cus-5' -%}
+{% else %}
+  {%- assign md = 12 | divided_by: section.settings.grid_number_md | prepend: 'col-md-' -%}
+{% endif %}
+{% if section.settings.grid_number_sm == 5 %}
+  {%- assign sm = 'col-sm-cus-5' -%}
+{% else %}
+  {%- assign sm = 12 | divided_by: section.settings.grid_number_sm | prepend: 'col-sm-' -%}
+{% endif %}
+{% if section.settings.grid_number_xs == 5 %}
+  {%- assign xs = 'col-xs-cus-5' -%}
+{% else %}
+  {%- assign xs = 12 | divided_by: section.settings.grid_number_xs | prepend: 'col-' -%}
+{% endif %}
+<div class="distance{% if section.settings.mt == true %} mt{% endif %}{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+{% if section.settings.has_fullwidth == false %}
+	<div class="container">
+{% else %}
+	<div class="container-fluid">
+{% endif %}
+    {% if section.settings.heading != blank %}
+      <div class="title_section {{ section.settings.title_alignment }}">
+        <span class="title" style="color: {{ section.settings.heading_c }};">{{ section.settings.heading }}</span>
+        {% if section.settings.subheading != blank %}
+          <span class="sub_title" style="color: {{ section.settings.subheading_c }};">{{ section.settings.subheading }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+		<div class="row text-center text-capitalize">
+			{% for block in section.blocks %}
+			<div class="{{ xxl }} {{ xl }} {{ lg }} {{ md }} {{ sm }} {{ xs }}">
+				<a href="{{ block.settings.link_title }}"><img class="img-fluid" src="{{ block.settings.img | img_url: '768x' }}" alt=""></a>
+				<a href="{{ block.settings.link_title }}" class="title text-uppercase font-700 mb-20 d-block color_default">{{ block.settings.title | escape }}</a>
+				<div class="block_list_menu">
+					{% for link in linklists[block.settings.link_list].links %}
+					{%- assign child_list_handle = link.title | handleize -%}
+						<div class="link_menu">
+							<a href="{{ link.url }}" class="menu-item color_body">{{ link.title }}</a>
+						</div>
+					{% endfor %}
+					{% if block.settings.view_all == true %}
+						<div class="link_menu">
+							<a href="{{ block.settings.link_view_all }}" class="menu-item view_all font-700 color_default color_body">{{ block.settings.text_view_all }}</a>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% schema %}
+{
+	"name": "Vinova Collection List",
+	"class": "section-collection-list",
+	"settings": [
+	{
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Vinova Collection List</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_c",
+      "label": "Heading color",
+      "default": "#222222"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Sub heading",
+      "default": "<p>Subtitle from happy customers</p>"
+    },
+    {
+      "type": "color",
+      "id": "subheading_c",
+      "label": "Sub heading color",
+      "default": "#666666"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Heading alignment",
+      "default": "text-left",
+      "options": [
+        {
+          "value": "text-left",
+          "label": "Left"
+        },
+        {
+          "value": "text-center",
+          "label": "Center"
+        },
+        {
+          "value": "text-right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+    	"type":  "header",
+    	"content": "Product item per row"
+    },
+    {
+    	"type": "range",
+    	"id": "grid_number_xxl",
+    	"min": 1,
+    	"max": 6,
+    	"step": 1,
+    	"label": "Products per row 1440px ↑",
+    	"default": 4
+    },
+    {
+    	"type": "range",
+    	"id": "grid_number",
+    	"min": 1,
+    	"max": 6,
+    	"step": 1,
+    	"label": "Products per row 1200px ↑",
+    	"default": 4
+    },
+    {
+    	"type": "range",
+    	"id": "grid_number_lg",
+    	"min": 1,
+    	"max": 6,
+    	"step": 1,
+    	"label": "Products desktop 1199px ↓",
+    	"default": 4
+    },
+    {
+    	"type": "range",
+    	"id": "grid_number_md",
+    	"min": 1,
+    	"max": 6,
+    	"step": 1,
+    	"label": "Products per row tablet 991px ↓",
+    	"default": 4
+    },
+    {
+    	"type": "range",
+    	"id": "grid_number_sm",
+    	"min": 1,
+    	"max": 6,
+    	"step": 1,
+    	"label": "Products per row mobile 767px ↓",
+    	"default": 4
+    },
+    {
+    	"type": "range",
+    	"id": "grid_number_xs",
+    	"min": 1,
+    	"max": 6,
+    	"step": 1,
+    	"label": "Products per row small mobile 575px ↓",
+    	"default": 1
+    },
+    {
+      "type":  "header",
+      "content": "Design option"
+    },
+    {
+      "type": "checkbox",
+      "id": "has_fullwidth",
+      "label": "Full width",
+      "default":   false
+    },
+    {
+      "type": "text",
+      "id": "class",
+      "label": "Class"
+    },
+    {
+      "type": "number",
+      "id": "distance_top",
+      "label": "Top spacing section (px)",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "distance_bottom",
+      "label": "Bottom spacing section (px)",
+      "default": 30
+    }
+  ],
+	"blocks": [
+		{
+			"type": "tabitem",
+			"name": "Tab item",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "img",
+					"label": "Image"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Title"
+				},
+				{
+					"type": "url",
+					"id": "link_title",
+					"label": "Link for title"
+				},
+				{
+					"type": "checkbox",
+					"id": "view_all",
+					"label": "Show view all",
+					"default": true
+				},
+				{
+					"type": "text",
+					"id": "text_view_all",
+					"label": "Text view all",
+					"default": "View all"
+				},
+				{
+					"type": "url",
+					"id": "link_view_all",
+					"label": "Link view all"
+				},
+				{
+					"type": "link_list",
+					"id": "link_list",
+					"label": "Choose menu",
+					"info": "Choose menu for block. Add new menu: Admin -> Navigation"
+				}
+			]
+		}
+	],
+	"presets": [{
+		"name": "Vinova Collection List"
+	}]  
+}
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }}px;
+    padding-bottom: {{ section.settings.distance_bottom }}px;
+  }
+</style>

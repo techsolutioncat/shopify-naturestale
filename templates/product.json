@@ -1,0 +1,38 @@
+{
+  "sections": {
+    "main": {
+      "type": "nov-product-template",
+      "settings": {
+        "show_notes": true,
+        "show_quantity_selector": true,
+        "product_swatch_enable": true,
+        "show_share": true,
+        "show_vendor": false,
+        "show_sku": true,
+        "show_categories": true,
+        "show_tags": true,
+        "show_available": true,
+        "show_des": true,
+        "enable_zoom": true,
+        "show_related": true,
+        "show_description": true,
+        "show_review": true,
+        "show_payments": true,
+        "title_payments": "Guaranteed safe checkout:",
+        "size_title": "10px",
+        "color_title_payments": "#222222",
+        "payments": "shopify:\/\/shop_images\/payment_cdcf2866-fade-47c2-bf10-307e9a885695.png",
+        "time": "Orders ship within 5 to 10 business days.",
+        "size_time": "12px",
+        "color_time": "#494949",
+        "truck": "Hoorey ! This item ships free to the US",
+        "size_truck": "12px",
+        "color_truck": "#494949",
+        "background_color": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

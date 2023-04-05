@@ -1,0 +1,147 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" style="padding-top: {{ section.settings.distance_top }}px; padding-bottom: {{ section.settings.distance_bottom }}px">
+  <div class="container-fluid">
+    
+    {% if section.settings.heading != blank %}
+      <div class="title_section {{ section.settings.title_alignment }} mb-80">
+      <span class="title" style="color: {{ section.settings.heading_c }};">{{ section.settings.heading }}</span>
+      {% if section.settings.subheading != blank %}
+        <span class="sub_title mt-0" style="color: {{ section.settings.subheading_c }};">{{ section.settings.subheading }}</span>
+      {% endif %}
+      {% if section.settings.icon_newsletter != blank %}
+        <img class="lazyload d-inline-block mt-25" data-src="{{ section.settings.icon_newsletter | img_url: '150x' }}" alt="Icon Newsletter">
+      {% endif %}
+    </div>
+    {% endif %}
+    {% form 'customer' %}
+    {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+    <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+    {% else %}
+    <div class="input-group">
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email"
+      name="contact[email]"
+      class="input-group__field newsletter__input form-control"
+      value="{% if customer %}{{ customer.email }}{% endif %}"
+      placeholder="{{ 'general.newsletter_form.email_newsletter' | t }}">
+      <div class="input-group__btn">
+        <button type="submit" class="btn newsletter__submit" name="commit">
+          {{ 'general.newsletter_form.submit' | t }}
+        </button>
+      </div>
+    </div>
+    {% endif %}
+    {% endform %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Vinova Newsletter",
+    "class": "index-section section-newsletter wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>Vinova Newsletter</p>"
+      },
+      {
+        "type": "color",
+        "id": "heading_c",
+        "label": "Heading color",
+        "default": "#222222"
+      },
+      {
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "<p>Subtitle from happy customers</p>"
+      },
+      {
+        "type": "color",
+        "id": "subheading_c",
+        "label": "Sub heading color",
+        "default": "#666666"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_newsletter",
+        "label": "Icon newsletter"
+      },
+      {
+        "type": "paragraph",
+        "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "number",
+        "id": "distance_top",
+        "label": "Top spacing section (px)",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section (px)",
+        "default": 30
+      }
+    ],
+    "presets": [{
+      "name": "Vinova Newsletter",
+      "category": "Promotional"
+    }]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+{% if section.settings.background_color != blank or bg_image.src != blank %}
+  <style>
+    #shopify-section-{{ section.id }} .distance {
+      {% if section.settings.background_color != blank %}background-color: {{ section.settings.background_color }};{% endif %}
+      {% if bg_image.src != blank %}background-image: url("{{ bg_image | img_url: '1920x' }}");background-position: center;background-repeat: no-repeat;margin-bottom: 72px;{% endif %}
+    }
+  </style>
+{% endif %}

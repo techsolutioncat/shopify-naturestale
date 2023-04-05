@@ -1,0 +1,307 @@
+{% case section.blocks.size %}
+  {% when 1 %}
+    {%- assign column_size = 'col-lg-12 col-md-12' -%}
+  {% when 2 %}
+    {%- assign column_size = 'col-lg-6 col-md-6' -%}
+  {% when 3 %}
+    {%- assign column_size = 'col-lg-4 col-md-4' -%}
+  {% when 4 %}
+    {%- assign column_size = 'col-lg-3 col-md-3' -%}
+  {% when 5 %}
+    {%- assign column_size = 'col-lg-cus-5 col-md-cus-5' -%}
+  {% else %}
+    {%- assign column_size = 'col-lg-2 col-md-4' -%}
+{% endcase %}
+<div class="distance{% if section.settings.class_section != blank %} {{ section.settings.class_section }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+  <div class="container">
+  {% endif %}
+    {% if section.settings.heading != blank %}
+      <div class="title_section {{ section.settings.title_alignment }}">
+        <span class="title" style="color: {{ section.settings.heading_c }};">{{ section.settings.heading }}</span>
+        {% if section.settings.subheading != blank %}
+          <span class="sub_title" style="color: {{ section.settings.subheading_c }};">{{ section.settings.subheading }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="row spacing-{{ section.settings.spacing }}">
+      {% for block in section.blocks %}
+        <div class="{{ column_size }} gallery-image_column{% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}">
+          <div class="gallery-image__item overflow-hidden{% if section.settings.style_img_1 %} nov-sh-image-1{% endif %}{% if section.settings.style_img_2 %} nov-sh-image-2{% endif %}{% if section.settings.style_img_3 %} nov-sh-image-3{% endif %}">
+            {% if block.settings.link != blank %}
+              <a class="w-100 gallery-image__link" href="{{ block.settings.link }}">
+            {% endif %}
+            {% if block.settings.image != blank %}
+              <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
+                {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                <img class="article__list-image lazyload"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                  data-src="{{ img_url }}"
+                  data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="">
+              </div>
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+            {% if block.settings.link != blank %}
+              </a>
+            {% endif %}
+            {% if block.settings.cta_label != blank or block.settings.btn_label != blank %}
+              <div class="gallery-image__caption cap-{{ forloop.index }}">
+                {% if block.settings.cta_label != blank %}
+                  <div class="title_block mb-0"><span style="color: {{ block.settings.cta_label_c }}">{{ block.settings.cta_label }}</span></div>
+                {% endif %}
+                {% if block.settings.cta_label2 != blank %}
+                  <div class="gallery-image__text2 mt-5" style="color: {{ block.settings.cta_label2_c }}">{{ block.settings.cta_label2 }}</div>
+                {% endif %}
+                {% if block.settings.btn_label != blank %}
+                  <a href="{{ block.settings.link }}" class="btn mt-15 mt-md-10">{{ block.settings.btn_label }}</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div><!-- End row -->
+  {% if section.settings.has_fullwidth == false %}
+  </div><!-- End container -->
+  {% endif %}
+</div>
+{% if section.blocks.size == 0 %}
+  {% include 'no-blocks' %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Vinova Gallery Image",
+    "class": "index-section section-gallery-image wow fadeInUp animated",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>Vinova Gallery Image</p>"
+      },
+      {
+        "type": "color",
+        "id": "heading_c",
+        "label": "Heading color",
+        "default": "#222222"
+      },
+      {
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "<p>Subtitle from happy customers</p>"
+      },
+      {
+        "type": "color",
+        "id": "subheading_c",
+        "label": "Sub heading color",
+        "default": "#666666"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Item image style"
+      },
+      {
+        "type": "range",
+        "id": "bd_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "label": "Border radius image (px)",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "spacing",
+        "min": 0,
+        "max": 60,
+        "step": 5,
+        "label": "Spacing items",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Style hover image"
+      },
+      {
+        "type": "checkbox",
+        "id": "style_img_1",
+        "label": "Style hover image 1"
+      },
+      {
+        "type": "checkbox",
+        "id": "style_img_2",
+        "label": "Style hover image 2"
+      },
+      {
+        "type": "checkbox",
+        "id": "style_img_3",
+        "label": "Style hover image 3"
+      },
+      {
+        "type": "header",
+        "content": "Design section"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "select",
+        "id": "bg_p",
+        "label": "Background position",
+        "default": "center",
+        "options": [
+          {"value": "top left", "label": "Top Left"},
+          {"value": "top center", "label": "Top Center"},
+          {"value": "top right", "label": "Top Right"},
+          {"value": "center left", "label": "Center Left"},
+          {"value": "center", "label": "Center"},
+          {"value": "center right", "label": "Center Right"},
+          {"value": "bottom left", "label": "Bottom Left"},
+          {"value": "bottom center", "label": "Bottom Center"},
+          {"value": "bottom right", "label": "Bottom Right"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "text",
+        "id": "class_section",
+        "label": "Class"
+      },
+      {
+        "type": "number",
+        "id": "distance_top",
+        "label": "Top spacing section (px)",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section (px)",
+        "default": 30
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "Caption 1"
+          },
+          {
+            "type": "color",
+            "id": "cta_label_c",
+            "label": "Caption 1 color",
+            "default": "#222222"
+          },
+          {
+            "type": "text",
+            "id": "cta_label2",
+            "label": "Caption 2"
+          },
+          {
+            "type": "color",
+            "id": "cta_label2_c",
+            "label": "Caption 2 color",
+            "default": "#666666"
+          },
+          {
+            "type": "text",
+            "id": "btn_label",
+            "label": "Text button"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Image Gallery",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  {%- assign bg_image = section.settings.background_image -%}
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }}px;
+    padding-bottom: {{ section.settings.distance_bottom }}px;
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");background-position: {{ section.settings.bg_p }};background-repeat: no-repeat;background-size: cover;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .gallery-image__item {
+    border-radius: {{ section.settings.bd_radius }}px;
+  }
+</style>

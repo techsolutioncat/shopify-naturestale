@@ -1,0 +1,283 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}" style="padding-top: {{ section.settings.distance_top }}px; padding-bottom: {{ section.settings.distance_bottom }}px" data-section-id="{{ section.id }}" data-section-type="nov-owl">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% else %}
+    <div class="container-fluid">
+  {% endif %}
+    {% if section.settings.heading != blank %}
+      <div class="title_section {{ section.settings.title_alignment }}">
+        <span class="title" style="color: {{ section.settings.heading_c }};">{{ section.settings.heading }}</span>
+        {% if section.settings.subheading != blank %}
+          <span class="sub_title" style="color: {{ section.settings.subheading_c }};">{{ section.settings.subheading }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {%- assign manu_limit = section.settings.limit -%}
+    {% if section.blocks.size > 0 %}
+      <div class="bl_content position-relative pt-30 pb-30">
+        <div class="nov-owl-carousel owl-carousel owl-theme" 
+          data-autoplay="{{ section.settings.autoplay }}" 
+          data-autoplayTimeout="{{ section.settings.autoplaytimes }}" 
+          data-loop="true" 
+          data-margin="{{ section.settings.spacing }}" 
+          data-dots="false" 
+          data-nav="false" 
+          data-items="{{ section.settings.number_lg }}" 
+          data-items_tablet="{{ section.settings.number_md }}"
+          data-items_mobile="{{ section.settings.number_sm }}"
+          data-center="false" 
+          data-start="0">
+          {% for block in section.blocks %}
+            <div class="manufacture__item overflow-hidden">
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="manufacture__link">
+              {% endif %}
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | img_url: '170x', scale: 2 | img_tag: block.settings.image.alt, 'manufacture__image' }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    {% if section.blocks.size == 0 %}
+      {% include 'no-blocks' %}
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Vinova Manufacture",
+    "class": "index-section section-manufacture wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>Vinova Manufacture</p>"
+      },
+      {
+        "type": "color",
+        "id": "heading_c",
+        "label": "Heading color",
+        "default": "#222222"
+      },
+      {
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "<p>Subtitle from happy customers</p>"
+      },
+      {
+        "type": "color",
+        "id": "subheading_c",
+        "label": "Sub heading color",
+        "default": "#666666"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Item per row"
+      },
+      {
+        "type": "range",
+        "id": "number_lg",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "Items per row",
+        "default": 6,
+        "info": "Breakpoint 992px ↑"
+      },
+      {
+        "type": "range",
+        "id": "number_md",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "label": "Items per row",
+        "default": 6,
+        "info": "Breakpoint 991px ↓"
+      },
+      {
+        "type": "range",
+        "id": "number_sm",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "label": "Items per row",
+        "default": 6,
+        "info": "Breakpoint 767px ↓"
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "min": 4,
+        "max": 30,
+        "step": 1,
+        "label": "Limit",
+        "default": 8,
+        "info": "Select number limit manufacture"
+      },
+      {
+        "type": "range",
+        "id": "radius",
+        "min": 0,
+        "max": 30,
+        "step": 5,
+        "label": "Border radius item",
+        "default": 0
+      },
+      {
+        "type":  "header",
+        "content": "Slider option"
+      },
+      {
+        "type": "range",
+        "id": "spacing",
+        "min": 0,
+        "max": 60,
+        "step": 5,
+        "label": "Spacing",
+        "default": 30
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "autoplaytimes",
+        "label": "Autoplay time",
+        "default": "5000"
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "number",
+        "id": "distance_top",
+        "label": "Top spacing section (px)",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section (px)",
+        "default": 30
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_image",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Manufacture",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  {%- assign bg_image = section.settings.background_image -%}
+  {% if section.settings.background_color != blank or bg_image.src != blank %}
+  #shopify-section-{{ section.id }} .distance {
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    {% endif %}
+  }
+  {% endif %}
+  #shopify-section-{{ section.id }} .manufacture__item {
+    border-radius: {{ section.settings.radius }}px;
+  }
+</style>

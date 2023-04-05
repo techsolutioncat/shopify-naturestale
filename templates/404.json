@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "nov-page404",
+      "settings": {
+        "title": "Page Not found",
+        "subheading": "We’re sorry — something has gone wrong on our end.",
+        "desc": "If difficulties persist, please contact the System Administrator of this site and report the error below..",
+        "background_color": "#00426f",
+        "image": "shopify:\/\/shop_images\/404-1.png"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,1017 @@
+<footer>
+  {% if section.settings.contactform %}
+    <div class="footer-contactform">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="contact-form form-vertical col-xl-6 col-lg-8 col-md-10">
+            {% if section.settings.title_contact != blank %}
+              <div class="title_block">
+                {{ section.settings.title_contact }}
+                {% if section.settings.sub_title_contact != blank %}
+                <div class="sub_title">
+                  {{ section.settings.sub_title_contact }}
+                </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            {% form 'contact' %}
+              {% if form.posted_successfully? %}
+                <p class="note form-success">
+                  {{ 'contact.form.post_success' | t }}
+                </p>
+              {% endif %}
+              {{ form.errors | default_errors }}
+              <div class="form-group row spacing-10">
+                <div class="col-md-6 mb-xs-10">
+                  <input type="text" id="ContactFormName" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="YOUR NAME">
+                </div>
+                <div class="col-md-6">
+                  <input type="email" id="ContactFormEmail" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="{% if form.errors contains 'email' %}input--error{% endif %}" placeholder="YOUR EMAIL">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <input class="mb-0" type="text" id="ContactFormSubject" name="contact[subject]" value="{% if form[subject] %}{{ form[subject] }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="SUBJECT">
+                </div>
+              </div>
+
+              <div class="form-group row mb-20">
+                <div class="col-md-12">
+                  <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="MESSAGE">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                </div>
+              </div>
+
+              
+              <button type="submit" class="btn"><i class="icon-buttonform mr-15"></i>{{ 'contact.form.submit' | t }}</button>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="footer-layout pt-80 pb-30">
+    <div class="container">
+      {% if section.settings.newsletter == true %}
+        <div class="block_newsletter footer_newsletter">
+          {% if section.settings.newsletter_title != blank %}
+            <div class="title_section text-center">
+              <div class="title"><strong>{{ section.settings.newsletter_title }}</strong></div>
+              {% if section.settings.newsletter_des != blank %}
+                <div class="sub_title">{{ section.settings.newsletter_des }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+          {% form 'customer' %}
+            {{ form.errors | default_errors }}
+            {% if form.posted_successfully? %}
+              <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+            {% else %}
+              <div class="input-group">
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input type="email"
+                  name="contact[email]"
+                  id="Email_Footer"
+                  class="input-group__field newsletter__input form-control"
+                  value="{% if customer %}{{ customer.email }}{% endif %}"
+                  placeholder="{{ 'general.newsletter_form.email_newsletter' | t }}">
+                  <button type="submit" class="btn newsletter__submit" name="commit">
+                    {{ 'general.newsletter_form.submit' | t }}
+                  </button>
+              </div>
+            {% endif %}
+          {% endform %}
+        </div>
+      {% endif %}
+      {% if section.blocks.size > 0 %}
+        <div class="row pt-45">
+          {% for block in section.blocks %}
+            {% if block.type == 'block_contact' %}
+              <div class="footer_contact block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
+                <div class="block">
+                  {% if block.settings.block_title != blank %}
+                  <div class="title-block">
+                    {{ block.settings.block_title }}
+                    <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
+                  </div>
+                  {% endif %}
+                  <div class="block-content{% if block.settings.block_title != blank %} h_t pb-xs-30{% endif %}">
+                    {% if block.settings.contact_address != blank %}
+                    <div class="contact d-flex align-items-center">
+                      <div class="icon-contact">
+                        <i class="zmdi zmdi-pin"></i>
+                      </div>
+                      <div class="address-content">
+                        <div class="content-address">{{ block.settings.contact_address }}</div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if block.settings.contact_phone != blank %}
+                    <div class="contact d-flex align-items-center">
+                      <div class="icon-contact">
+                        <i class="zmdi zmdi-phone-in-talk"></i>
+                      </div>
+                      <div class="phone-content">
+                        <div class="number">{{ block.settings.contact_phone }}</br>{{ block.settings.contact_phone_2 }}</div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if block.settings.contact_email != blank %}
+                    <div class="contact d-flex align-items-center">
+                      <div class="icon-contact">
+                        <i class="zmdi zmdi-email"></i>
+                      </div>
+                      <div class="email-content">
+                        <div class="email">{{ block.settings.contact_email }}</br>{{ block.settings.contact_email_2 }}</div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if block.settings.img != blank %}
+                      <img class="lazyload mt-40" data-src="{{ block.settings.img | img_url: '300x' }}">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.type == 'block_menu' %}
+              {%- assign footer_linklist = block.settings.menu_handle -%}
+              <div class="footer_menu block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
+                {% if block.settings.block_title != blank %}
+                <div class="title-block">
+                  {{ block.settings.block_title }}
+                  <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
+                </div>
+                {% endif %}
+                <div class="block-content{% if block.settings.block_title != blank %} h_t pb-xs-30{% endif %}">
+                  {% if linklists[footer_linklist].links.size > 0 %}
+                    <ul class="site-footer__linklist list-unstyled">
+                      {% for link in linklists[footer_linklist].links %}
+                        <li class="site-footer__linklist-item">
+                          <a class="font-500" href="{{ link.url }}">{{ link.title }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.type == 'block_html' %}
+              <div class="footer_html block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
+                <div class="block">
+                  {% if block.settings.block_title != blank %}
+                  <div class="title-block">
+                    {{ block.settings.block_title }}
+                    <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
+                  </div>
+                  {% endif %}
+                  <div class="block-content{% if block.settings.block_title != blank %} h_t pb-xs-30{% endif %}">
+                    {% if block.settings.img != blank %}
+                    <img src="{{ block.settings.img | img_url: '190x' }}">
+                    {% endif %}
+                    {% if block.settings.html_content != blank %}
+                      <div class="bl_html mt-20">{{ block.settings.html_content }}</div>
+                    {% endif %}
+                    {% if block.settings.social %}
+                      <div class="d-flex align-items-center mt-30">
+                        {% include 'nov-social' %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.type == 'block_newsletter' %}
+              <div class="footer_newsletter block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
+                {% if block.settings.block_title != blank %}
+                <div class="title-block">
+                  {{ block.settings.block_title }}
+                  <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
+                </div>
+                {% endif %}
+                <div class="block-content{% if block.settings.block_title != blank %} h_t pb-xs-30{% endif %}">
+                  {% if block.settings.newsletter_des != blank %}
+                    <div class="des mb-25">{{ block.settings.newsletter_des }}</div>
+                  {% endif %}
+                  <div class="block-content">
+                    {% form 'customer' %}
+                      {{ form.errors | default_errors }}
+                      {% if form.posted_successfully? %}
+                        <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                      {% else %}
+                        <div class="input-group">
+                          <input type="hidden" name="contact[tags]" value="newsletter">
+                          <input type="email"
+                            name="contact[email]"
+                            id="Email_Footer"
+                            class="input-group__field newsletter__input form-control"
+                            value="{% if customer %}{{ customer.email }}{% endif %}"
+                            placeholder="{{ 'general.newsletter_form.email_newsletter' | t }}">
+                          <div class="input-group__btn">
+                            <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe_footer">
+                              <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+                            </button>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endform %}
+                  </div>
+                  {% if block.settings.social %}
+                    <div class="d-flex align-items-center mt-30">
+                      <span class="title_social text-uppercase font-700">{{ 'layout.footer.title_social' | t }} : </span>
+                      {% include 'nov-social' %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if block.type == 'block_image' %}
+              <div class="footer_image block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
+                <div class="block">
+                  {% if block.settings.block_title != blank %}
+                  <div class="title-block">
+                    {{ block.settings.block_title }}
+                    <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
+                  </div>
+                  {% endif %}
+                  <div class="block-content{% if block.settings.block_title != blank %} h_t pb-xs-30{% endif %}">
+                    {% if block.settings.img != blank %}
+                      <img class="img-fluid lazyload " data-src="{{ block.settings.img | img_url: '300x' }}">
+                    {% endif %}
+                    {% if block.settings.img2 != blank %}
+                      <img class="img-fluid lazyload mt-45" data-src="{{ block.settings.img2 | img_url: '300x' }}">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="footer_copyright pt-20 pb-35 pb-sm-80 text-center">
+    <div class="container">
+      {% if section.settings.certification != blank %}
+        <div class="certification mb-40">
+          <img class="lazyload" data-src="{{ section.settings.certification | img_url: '300x' }}">
+        </div>
+      {% endif %}
+      {% if section.settings.notice != blank %}
+        <div class="notice mb-35">{{ section.settings.notice }}</div>
+      {% endif %}
+      {% if section.settings.payment_icons != blank %}
+        <div class="payment mb-25"><img class="lazyload" data-src="{{ section.settings.payment_icons | img_url: '300x' }}" alt="img"></div>
+      {% endif %}
+      <div class="copyright">{{ section.settings.copyright }}</div>
+    </div>
+  </div>
+</footer>
+{% schema %}
+  {
+    "name": "Footer",
+    "class": "nov-footer wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Design options"
+      },
+      {
+        "type": "color",
+        "id": "color_t",
+        "label": "Footer title colors",
+        "default": "#222"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Footer text colors",
+        "default": "#666"
+      },
+      {
+        "type": "color",
+        "id": "bg_copy",
+        "label": "Background colors copyright"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "header",
+        "content": "Contact Form"
+      },
+      {
+        "type": "checkbox",
+        "id": "contactform",
+        "label": "Show contact form"
+      },
+      {
+        "type": "text",
+        "id": "title_contact",
+        "label": "Title contact form",
+        "default": "Contact Us"
+      },
+      {
+        "type": "text",
+        "id": "sub_title_contact",
+        "label": "Sub title contact form",
+        "default": "We’re always happy to reply our customers."
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_contact_form",
+        "label": "Background contact form"
+      },
+      {
+        "type": "header",
+        "content": "Newsletter"
+      },
+      {
+        "type": "checkbox",
+        "id": "newsletter",
+        "label": "Show newsletter"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Newsletter title",
+        "default": "Newsletter"
+      },
+      {
+        "type": "richtext",
+        "id": "newsletter_des",
+        "label": "Newsletter description",
+        "default": "<p>We’re always happy to reply our customers.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Social"
+      },
+      {
+        "type": "color",
+        "id": "c_social",
+        "label": "Color button social"
+      },
+      {
+        "type": "color",
+        "id": "bg_social",
+        "label": "Background button social"
+      },
+      {
+        "type": "header",
+        "content": "Copyright"
+      },
+      {
+        "type": "image_picker",
+        "id": "certification",
+        "label": "Certification"
+      },
+      {
+        "type": "richtext",
+        "id": "notice",
+        "label": "Notice"
+      },
+      {
+        "type": "image_picker",
+        "id": "payment_icons",
+        "label": "Upload payment icons"
+      },
+      {
+        "type": "text",
+        "id": "copyright",
+        "label": "Copyright text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block_contact",
+        "name": "Block Contact",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "contact_address",
+            "label": "Address",
+            "placeholder": "Examle: 123 Suspendis matti, Vinova Building VST  District NY Accums"
+          },
+          {
+            "type": "text",
+            "id": "contact_phone",
+            "label": "Phone 1",
+            "placeholder": "Examle: (+84) 123456789"
+          },
+          {
+            "type": "text",
+            "id": "contact_phone_2",
+            "label": "Phone 2",
+            "placeholder": "Examle: (+84) 0123456789"
+          },
+          {
+            "type": "text",
+            "id": "contact_email",
+            "label": "Email",
+            "placeholder": "info@vinovathemes.com"
+          },
+          {
+            "type": "text",
+            "id": "contact_email_2",
+            "label": "Email 2",
+            "placeholder": "demo@vinovathemes.com"
+          },
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "select",
+            "id": "grid_xl",
+            "label": "Width item large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {"value": "col-xl-1", "label": "1/12"},
+              {"value": "col-xl-2", "label": "2/12"},
+              {"value": "col-xl-3", "label": "3/12"},
+              {"value": "col-xl-4", "label": "4/12"},
+              {"value": "col-xl-5", "label": "5/12"},
+              {"value": "col-xl-6", "label": "6/12"},
+              {"value": "col-xl-7", "label": "7/12"},
+              {"value": "col-xl-8", "label": "8/12"},
+              {"value": "col-xl-9", "label": "9/12"},
+              {"value": "col-xl-10", "label": "10/12"},
+              {"value": "col-xl-11", "label": "11/12"},
+              {"value": "col-xl-12", "label": "12/12"},
+              {"value": "col-xl-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_lg",
+            "label": "Width item 1199px ↓",
+            "default": "col-lg-3",
+            "options": [
+              {"value": "col-lg-1", "label": "1/12"},
+              {"value": "col-lg-2", "label": "2/12"},
+              {"value": "col-lg-3", "label": "3/12"},
+              {"value": "col-lg-4", "label": "4/12"},
+              {"value": "col-lg-5", "label": "5/12"},
+              {"value": "col-lg-6", "label": "6/12"},
+              {"value": "col-lg-7", "label": "7/12"},
+              {"value": "col-lg-8", "label": "8/12"},
+              {"value": "col-lg-9", "label": "9/12"},
+              {"value": "col-lg-10", "label": "10/12"},
+              {"value": "col-lg-11", "label": "11/12"},
+              {"value": "col-lg-12", "label": "12/12"},
+              {"value": "col-lg-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_md",
+            "label": "Width item tablet 991px ↓",
+            "default": "col-md-3",
+            "options": [
+              {"value": "col-md-1", "label": "1/12"},
+              {"value": "col-md-2", "label": "2/12"},
+              {"value": "col-md-3", "label": "3/12"},
+              {"value": "col-md-4", "label": "4/12"},
+              {"value": "col-md-5", "label": "5/12"},
+              {"value": "col-md-6", "label": "6/12"},
+              {"value": "col-md-7", "label": "7/12"},
+              {"value": "col-md-8", "label": "8/12"},
+              {"value": "col-md-9", "label": "9/12"},
+              {"value": "col-md-10", "label": "10/12"},
+              {"value": "col-md-11", "label": "11/12"},
+              {"value": "col-md-12", "label": "12/12"},
+              {"value": "col-md-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_sm",
+            "label": "Width item mobile 767px ↓",
+            "default": "col-sm-3",
+            "options": [
+              {"value": "col-sm-1", "label": "1/12"},
+              {"value": "col-sm-2", "label": "2/12"},
+              {"value": "col-sm-3", "label": "3/12"},
+              {"value": "col-sm-4", "label": "4/12"},
+              {"value": "col-sm-5", "label": "5/12"},
+              {"value": "col-sm-6", "label": "6/12"},
+              {"value": "col-sm-7", "label": "7/12"},
+              {"value": "col-sm-8", "label": "8/12"},
+              {"value": "col-sm-9", "label": "9/12"},
+              {"value": "col-sm-10", "label": "10/12"},
+              {"value": "col-sm-11", "label": "11/12"},
+              {"value": "col-sm-12", "label": "12/12"},
+              {"value": "col-sm-cus-5", "label": "1/5"}
+            ]
+          }
+        ]
+      },
+      {
+        "type": "block_menu",
+        "name": "Block Menu",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "link_list",
+            "id": "menu_handle",
+            "label": "Choose menu",
+            "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "select",
+            "id": "grid_xl",
+            "label": "Width item large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {"value": "col-xl-1", "label": "1/12"},
+              {"value": "col-xl-2", "label": "2/12"},
+              {"value": "col-xl-3", "label": "3/12"},
+              {"value": "col-xl-4", "label": "4/12"},
+              {"value": "col-xl-5", "label": "5/12"},
+              {"value": "col-xl-6", "label": "6/12"},
+              {"value": "col-xl-7", "label": "7/12"},
+              {"value": "col-xl-8", "label": "8/12"},
+              {"value": "col-xl-9", "label": "9/12"},
+              {"value": "col-xl-10", "label": "10/12"},
+              {"value": "col-xl-11", "label": "11/12"},
+              {"value": "col-xl-12", "label": "12/12"},
+              {"value": "col-xl-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_lg",
+            "label": "Width item 1199px ↓",
+            "default": "col-lg-3",
+            "options": [
+              {"value": "col-lg-1", "label": "1/12"},
+              {"value": "col-lg-2", "label": "2/12"},
+              {"value": "col-lg-3", "label": "3/12"},
+              {"value": "col-lg-4", "label": "4/12"},
+              {"value": "col-lg-5", "label": "5/12"},
+              {"value": "col-lg-6", "label": "6/12"},
+              {"value": "col-lg-7", "label": "7/12"},
+              {"value": "col-lg-8", "label": "8/12"},
+              {"value": "col-lg-9", "label": "9/12"},
+              {"value": "col-lg-10", "label": "10/12"},
+              {"value": "col-lg-11", "label": "11/12"},
+              {"value": "col-lg-12", "label": "12/12"},
+              {"value": "col-lg-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_md",
+            "label": "Width item tablet 991px ↓",
+            "default": "col-md-3",
+            "options": [
+              {"value": "col-md-1", "label": "1/12"},
+              {"value": "col-md-2", "label": "2/12"},
+              {"value": "col-md-3", "label": "3/12"},
+              {"value": "col-md-4", "label": "4/12"},
+              {"value": "col-md-5", "label": "5/12"},
+              {"value": "col-md-6", "label": "6/12"},
+              {"value": "col-md-7", "label": "7/12"},
+              {"value": "col-md-8", "label": "8/12"},
+              {"value": "col-md-9", "label": "9/12"},
+              {"value": "col-md-10", "label": "10/12"},
+              {"value": "col-md-11", "label": "11/12"},
+              {"value": "col-md-12", "label": "12/12"},
+              {"value": "col-md-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_sm",
+            "label": "Width item mobile 767px ↓",
+            "default": "col-sm-3",
+            "options": [
+              {"value": "col-sm-1", "label": "1/12"},
+              {"value": "col-sm-2", "label": "2/12"},
+              {"value": "col-sm-3", "label": "3/12"},
+              {"value": "col-sm-4", "label": "4/12"},
+              {"value": "col-sm-5", "label": "5/12"},
+              {"value": "col-sm-6", "label": "6/12"},
+              {"value": "col-sm-7", "label": "7/12"},
+              {"value": "col-sm-8", "label": "8/12"},
+              {"value": "col-sm-9", "label": "9/12"},
+              {"value": "col-sm-10", "label": "10/12"},
+              {"value": "col-sm-11", "label": "11/12"},
+              {"value": "col-sm-12", "label": "12/12"},
+              {"value": "col-sm-cus-5", "label": "1/5"}
+            ]
+          }
+        ]
+      },
+      {
+        "type": "block_html",
+        "name": "Block HTML",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+          },
+          {
+            "type": "textarea",
+            "id": "html_content",
+            "label": "Content",
+            "placeholder": "You can input code html for content.",
+            "info": "You can input code html for content."
+          },
+          {
+            "type": "checkbox",
+            "id": "social",
+            "label": "Show social"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "select",
+            "id": "grid_xl",
+            "label": "Width item large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {"value": "col-xl-1", "label": "1/12"},
+              {"value": "col-xl-2", "label": "2/12"},
+              {"value": "col-xl-3", "label": "3/12"},
+              {"value": "col-xl-4", "label": "4/12"},
+              {"value": "col-xl-5", "label": "5/12"},
+              {"value": "col-xl-6", "label": "6/12"},
+              {"value": "col-xl-7", "label": "7/12"},
+              {"value": "col-xl-8", "label": "8/12"},
+              {"value": "col-xl-9", "label": "9/12"},
+              {"value": "col-xl-10", "label": "10/12"},
+              {"value": "col-xl-11", "label": "11/12"},
+              {"value": "col-xl-12", "label": "12/12"},
+              {"value": "col-xl-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_lg",
+            "label": "Width item 1199px ↓",
+            "default": "col-lg-3",
+            "options": [
+              {"value": "col-lg-1", "label": "1/12"},
+              {"value": "col-lg-2", "label": "2/12"},
+              {"value": "col-lg-3", "label": "3/12"},
+              {"value": "col-lg-4", "label": "4/12"},
+              {"value": "col-lg-5", "label": "5/12"},
+              {"value": "col-lg-6", "label": "6/12"},
+              {"value": "col-lg-7", "label": "7/12"},
+              {"value": "col-lg-8", "label": "8/12"},
+              {"value": "col-lg-9", "label": "9/12"},
+              {"value": "col-lg-10", "label": "10/12"},
+              {"value": "col-lg-11", "label": "11/12"},
+              {"value": "col-lg-12", "label": "12/12"},
+              {"value": "col-lg-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_md",
+            "label": "Width item tablet 991px ↓",
+            "default": "col-md-3",
+            "options": [
+              {"value": "col-md-1", "label": "1/12"},
+              {"value": "col-md-2", "label": "2/12"},
+              {"value": "col-md-3", "label": "3/12"},
+              {"value": "col-md-4", "label": "4/12"},
+              {"value": "col-md-5", "label": "5/12"},
+              {"value": "col-md-6", "label": "6/12"},
+              {"value": "col-md-7", "label": "7/12"},
+              {"value": "col-md-8", "label": "8/12"},
+              {"value": "col-md-9", "label": "9/12"},
+              {"value": "col-md-10", "label": "10/12"},
+              {"value": "col-md-11", "label": "11/12"},
+              {"value": "col-md-12", "label": "12/12"},
+              {"value": "col-md-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_sm",
+            "label": "Width item mobile 767px ↓",
+            "default": "col-sm-3",
+            "options": [
+              {"value": "col-sm-1", "label": "1/12"},
+              {"value": "col-sm-2", "label": "2/12"},
+              {"value": "col-sm-3", "label": "3/12"},
+              {"value": "col-sm-4", "label": "4/12"},
+              {"value": "col-sm-5", "label": "5/12"},
+              {"value": "col-sm-6", "label": "6/12"},
+              {"value": "col-sm-7", "label": "7/12"},
+              {"value": "col-sm-8", "label": "8/12"},
+              {"value": "col-sm-9", "label": "9/12"},
+              {"value": "col-sm-10", "label": "10/12"},
+              {"value": "col-sm-11", "label": "11/12"},
+              {"value": "col-sm-12", "label": "12/12"},
+              {"value": "col-sm-cus-5", "label": "1/5"}
+            ]
+          }
+        ]
+      },
+      {
+        "type": "block_newsletter",
+        "name": "Block Newsletter",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "newsletter_des",
+            "label": "Newsletter description",
+            "placeholder": "You can input code html for content.",
+            "info": "You can input code html for description."
+          },
+          {
+            "type": "checkbox",
+            "id": "social",
+            "label": "Show social"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "select",
+            "id": "grid_xl",
+            "label": "Width item large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {"value": "col-xl-1", "label": "1/12"},
+              {"value": "col-xl-2", "label": "2/12"},
+              {"value": "col-xl-3", "label": "3/12"},
+              {"value": "col-xl-4", "label": "4/12"},
+              {"value": "col-xl-5", "label": "5/12"},
+              {"value": "col-xl-6", "label": "6/12"},
+              {"value": "col-xl-7", "label": "7/12"},
+              {"value": "col-xl-8", "label": "8/12"},
+              {"value": "col-xl-9", "label": "9/12"},
+              {"value": "col-xl-10", "label": "10/12"},
+              {"value": "col-xl-11", "label": "11/12"},
+              {"value": "col-xl-12", "label": "12/12"},
+              {"value": "col-xl-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_lg",
+            "label": "Width item 1199px ↓",
+            "default": "col-lg-3",
+            "options": [
+              {"value": "col-lg-1", "label": "1/12"},
+              {"value": "col-lg-2", "label": "2/12"},
+              {"value": "col-lg-3", "label": "3/12"},
+              {"value": "col-lg-4", "label": "4/12"},
+              {"value": "col-lg-5", "label": "5/12"},
+              {"value": "col-lg-6", "label": "6/12"},
+              {"value": "col-lg-7", "label": "7/12"},
+              {"value": "col-lg-8", "label": "8/12"},
+              {"value": "col-lg-9", "label": "9/12"},
+              {"value": "col-lg-10", "label": "10/12"},
+              {"value": "col-lg-11", "label": "11/12"},
+              {"value": "col-lg-12", "label": "12/12"},
+              {"value": "col-lg-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_md",
+            "label": "Width item tablet 991px ↓",
+            "default": "col-md-3",
+            "options": [
+              {"value": "col-md-1", "label": "1/12"},
+              {"value": "col-md-2", "label": "2/12"},
+              {"value": "col-md-3", "label": "3/12"},
+              {"value": "col-md-4", "label": "4/12"},
+              {"value": "col-md-5", "label": "5/12"},
+              {"value": "col-md-6", "label": "6/12"},
+              {"value": "col-md-7", "label": "7/12"},
+              {"value": "col-md-8", "label": "8/12"},
+              {"value": "col-md-9", "label": "9/12"},
+              {"value": "col-md-10", "label": "10/12"},
+              {"value": "col-md-11", "label": "11/12"},
+              {"value": "col-md-12", "label": "12/12"},
+              {"value": "col-md-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_sm",
+            "label": "Width item mobile 767px ↓",
+            "default": "col-sm-3",
+            "options": [
+              {"value": "col-sm-1", "label": "1/12"},
+              {"value": "col-sm-2", "label": "2/12"},
+              {"value": "col-sm-3", "label": "3/12"},
+              {"value": "col-sm-4", "label": "4/12"},
+              {"value": "col-sm-5", "label": "5/12"},
+              {"value": "col-sm-6", "label": "6/12"},
+              {"value": "col-sm-7", "label": "7/12"},
+              {"value": "col-sm-8", "label": "8/12"},
+              {"value": "col-sm-9", "label": "9/12"},
+              {"value": "col-sm-10", "label": "10/12"},
+              {"value": "col-sm-11", "label": "11/12"},
+              {"value": "col-sm-12", "label": "12/12"},
+              {"value": "col-sm-cus-5", "label": "1/5"}
+            ]
+          }
+        ]
+      },
+      {
+        "type": "block_image",
+        "name": "Block Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "img2",
+            "label": "Image 2"
+          },
+          {
+            "type": "text",
+            "id": "block_class",
+            "label": "Class"
+          },
+          {
+            "type": "select",
+            "id": "grid_xl",
+            "label": "Width item large desktop 1200px ↑",
+            "default": "col-xl-3",
+            "options": [
+              {"value": "col-xl-1", "label": "1/12"},
+              {"value": "col-xl-2", "label": "2/12"},
+              {"value": "col-xl-3", "label": "3/12"},
+              {"value": "col-xl-4", "label": "4/12"},
+              {"value": "col-xl-5", "label": "5/12"},
+              {"value": "col-xl-6", "label": "6/12"},
+              {"value": "col-xl-7", "label": "7/12"},
+              {"value": "col-xl-8", "label": "8/12"},
+              {"value": "col-xl-9", "label": "9/12"},
+              {"value": "col-xl-10", "label": "10/12"},
+              {"value": "col-xl-11", "label": "11/12"},
+              {"value": "col-xl-12", "label": "12/12"},
+              {"value": "col-xl-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_lg",
+            "label": "Width item 1199px ↓",
+            "default": "col-lg-3",
+            "options": [
+              {"value": "col-lg-1", "label": "1/12"},
+              {"value": "col-lg-2", "label": "2/12"},
+              {"value": "col-lg-3", "label": "3/12"},
+              {"value": "col-lg-4", "label": "4/12"},
+              {"value": "col-lg-5", "label": "5/12"},
+              {"value": "col-lg-6", "label": "6/12"},
+              {"value": "col-lg-7", "label": "7/12"},
+              {"value": "col-lg-8", "label": "8/12"},
+              {"value": "col-lg-9", "label": "9/12"},
+              {"value": "col-lg-10", "label": "10/12"},
+              {"value": "col-lg-11", "label": "11/12"},
+              {"value": "col-lg-12", "label": "12/12"},
+              {"value": "col-lg-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_md",
+            "label": "Width item tablet 991px ↓",
+            "default": "col-md-3",
+            "options": [
+              {"value": "col-md-1", "label": "1/12"},
+              {"value": "col-md-2", "label": "2/12"},
+              {"value": "col-md-3", "label": "3/12"},
+              {"value": "col-md-4", "label": "4/12"},
+              {"value": "col-md-5", "label": "5/12"},
+              {"value": "col-md-6", "label": "6/12"},
+              {"value": "col-md-7", "label": "7/12"},
+              {"value": "col-md-8", "label": "8/12"},
+              {"value": "col-md-9", "label": "9/12"},
+              {"value": "col-md-10", "label": "10/12"},
+              {"value": "col-md-11", "label": "11/12"},
+              {"value": "col-md-12", "label": "12/12"},
+              {"value": "col-md-cus-5", "label": "1/5"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "grid_sm",
+            "label": "Width item mobile 767px ↓",
+            "default": "col-sm-3",
+            "options": [
+              {"value": "col-sm-1", "label": "1/12"},
+              {"value": "col-sm-2", "label": "2/12"},
+              {"value": "col-sm-3", "label": "3/12"},
+              {"value": "col-sm-4", "label": "4/12"},
+              {"value": "col-sm-5", "label": "5/12"},
+              {"value": "col-sm-6", "label": "6/12"},
+              {"value": "col-sm-7", "label": "7/12"},
+              {"value": "col-sm-8", "label": "8/12"},
+              {"value": "col-sm-9", "label": "9/12"},
+              {"value": "col-sm-10", "label": "10/12"},
+              {"value": "col-sm-11", "label": "11/12"},
+              {"value": "col-sm-12", "label": "12/12"},
+              {"value": "col-sm-cus-5", "label": "1/5"}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+{%- assign bg_image = section.settings.background_image -%}
+<style>
+  .footer-layout {
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+  .nov-footer, .site-footer__linklist-item a {
+    color: {{ section.settings.color }};
+  }
+  .footer-layout .title-block,
+  .footer-layout .title,
+  .footer_newsletter input,
+  .footer_newsletter .title_social,
+  .footer_newsletter .form-control:focus {
+    color: {{ section.settings.color_t }};
+  }
+  .footer_menu li a:hover {
+    color: var(--theme-color-default);
+  }
+  .nov-footer .block_social a {
+    color: {{ section.settings.c_social }};
+    background-color: {{ section.settings.bg_social }};
+  }
+  {% if section.settings.bg_copy != blank %}
+    .footer_copyright {
+      background-color: {{ section.settings.bg_copy }};
+    }
+  {% endif %}
+  {% if section.settings.bg_contact_form != blank %}
+    .footer-contactform {
+      background-image: url("{{ section.settings.bg_contact_form | img_url: '1920x' }}"); background-repeat: no-repeat; background-size: cover;background-position: center;
+    }
+  {% endif %}
+</style>

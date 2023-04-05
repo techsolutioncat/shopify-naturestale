@@ -1,0 +1,216 @@
+<div class="distance{% if section.settings.class != blank %} {{ section.settings.class }}{% endif %}">
+  {% if section.settings.has_fullwidth == false %}
+    <div class="container">
+  {% endif %}
+    <div class="row align-items-center">
+      <div class="block-text col-lg-6 mt-md-40 order-1 order-lg-0">
+        {% if section.settings.heading != blank %}
+          <div class="title_section {{ section.settings.title_alignment }} mb-30">
+            <span class="title" style="color: {{ section.settings.heading_c }};">{{ section.settings.heading }}</span>
+            {% if section.settings.subheading != blank %}
+              <div class="title_section-sub font-700 mt-20" style="color: {{ section.settings.subheading_c }};">{{ section.settings.subheading }}</div>
+            {% endif %}
+            {% if section.settings.desc != blank %}
+              <div class="block-text__heading-desc mt-20" style="color: {{ section.settings.desc_c }};">{{ section.settings.desc }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="block-text__content">
+          {% for block in section.blocks %}
+            <div class="block-text__item font-500{% if forloop.last == false %} mb-5{% endif %}">
+              {% if section.settings.icon != blank %}<img class="img-fluid lazyload" data-src="{{ section.settings.icon | img_url: '20x' }}">{% endif %}
+              {{ block.settings.t1 }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="block-img col-lg-6">
+        {% if section.settings.image != blank %}
+          <div class="respone_image" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%;">
+            {% assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <img class="article__list-image lazyload"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+            data-src="{{ img_url }}"
+            data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+            data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+            data-sizes="auto"
+            alt="">
+          </div>
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+    </div>
+  {% if section.settings.has_fullwidth == false %}
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Vinova Image Width Text",
+    "class": "index-section section-img-text overflow-hidden wow fadeInUp animated",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>Vinova Image With Text</p>"
+      },
+      {
+        "type": "color",
+        "id": "heading_c",
+        "label": "Heading color",
+        "default": "#222222"
+      },
+      {
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Sub heading",
+        "default": "<p>Subtitle from happy customers</p>"
+      },
+      {
+        "type": "color",
+        "id": "subheading_c",
+        "label": "Sub heading color",
+        "default": "#666666"
+      },
+      {
+        "type": "richtext",
+        "id": "desc",
+        "label": "Description",
+        "default": "<p>Subtitle from happy customers</p>"
+      },
+      {
+        "type": "color",
+        "id": "desc_c",
+        "label": "Description color",
+        "default": "#666666"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type":  "header",
+        "content": "Design option"
+      },
+      {
+        "type": "color",
+        "id": "text_c",
+        "label": "Text color",
+        "default": "#666666"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon item text"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full width",
+        "default":   false
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "select",
+        "id": "bg_p",
+        "label": "Background position",
+        "default": "center",
+        "options": [
+          {"value": "top left", "label": "Top Left"},
+          {"value": "top center", "label": "Top Center"},
+          {"value": "top right", "label": "Top Right"},
+          {"value": "center left", "label": "Center Left"},
+          {"value": "center", "label": "Center"},
+          {"value": "center right", "label": "Center Right"},
+          {"value": "bottom left", "label": "Bottom Left"},
+          {"value": "bottom center", "label": "Bottom Center"},
+          {"value": "bottom right", "label": "Bottom Right"}
+        ]
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "number",
+        "id": "distance_top",
+        "label": "Top spacing section (px)",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "distance_bottom",
+        "label": "Bottom spacing section (px)",
+        "default": 30
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_left",
+        "name": "Item content",
+        "settings": [
+          {
+            "type": "text",
+            "id": "t1",
+            "label": "Title",
+            "default": "Lorem ipsum dolor"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Images With Text"
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }}px;
+    padding-bottom: {{ section.settings.distance_bottom }}px;
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    {%- assign bg_image = section.settings.background_image -%}
+    {% if bg_image.src != blank %}
+      background-image: url("{{ bg_image | img_url: '1920x' }}");background-position: {{ section.settings.bg_p }};background-repeat: no-repeat;background-size: cover;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .block-text__item {
+    color: {{ section.settings.text_c }};
+  }
+</style>

@@ -1,0 +1,26 @@
+{% assign variantCount = product.variants | size %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{% if product.available %}
+  <form class="formAddToCart" action="/cart/add" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+    {% if variantCount > 1 %}
+      <a class="btnAddToCart btnChooseVariant" href="javascript:void(0);" data-url="{{ product.handle }}"{% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top"{% endif %} title="{{ 'products.product.select_options' | t }}" tabindex="0">
+        <i class="zmdi zmdi-check"></i>
+      </a>
+    {% else %}
+      <button class="btnAddToCart" type="submit" value="Submit" data-handle="{{ product.handle }}" data-pid="{{ product.variants.first.id }}"{% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top"{% endif %} title="{% if current_variant.inventory_policy == 'continue' and current_variant.inventory_quantity < 1 %}{{ 'products.product.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}" tabindex="0">
+        {% if current_variant.inventory_policy == 'continue' and current_variant.inventory_quantity < 1 %}
+          <i class="zmdi zmdi-truck"></i>
+        {% else %}
+          <i class="icon__addtocart"></i>
+        {% endif %}
+      </button>
+    {% endif %}
+  </form>
+{% else %}
+  <div class="btn btnsold_out sold_out d-inline-flex align-items-center justify-content-center" data-toggle="modal" data-target="#Form_newletter">
+    <span{% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top"{% endif %} title="{{ "products.product.notify_me" | t }}">
+      <i class="zmdi zmdi-email"></i>
+    </span>
+  </div>
+{% endif %}
