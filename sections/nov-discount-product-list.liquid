@@ -1,0 +1,44 @@
+{%- style -%}
+{%- endstyle -%}
+
+<div class="section-content">
+  {% if section.settings.top_image != blank %}
+    <div class="background-image">
+      <img src="{{ section.settings.top_image | image_url: width: 2000 }}">
+    </div>
+  {% endif %}
+  <div class="page-width container"></div>
+  {% if section.settings.bottom_image != blank %}
+    <div class="background-image">
+      <img src="{{ section.settings.bottom_image | image_url: width: 2000 }}">
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Discount Products",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_image",
+      "label": "Top image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Discount Products"
+    }
+  ]
+}
+{% endschema %}

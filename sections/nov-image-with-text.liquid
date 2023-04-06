@@ -86,7 +86,21 @@
     margin: 40px 0px;
   }
 
+  #shopify-section-{{ section.id }} .bottom-image {
+    z-index: -1;
+    position: relative;
+    margin-top: -400px;
+  }
+  #shopify-section-{{ section.id }} .bottom-image img {
+    width: 100%;
+    object-fit: cover;
+  }
   /* Responsive */
+  @media (max-width: 1440px) {
+    #shopify-section-{{ section.id }} .bottom-image {
+      margin-top: -320px;
+    }
+  }
   @media (max-width: 1200px) {
     #shopify-section-{{ section.id }} .text-group {
       width: calc(100% - 450px);
@@ -99,6 +113,9 @@
     }
     #shopify-section-{{ section.id }} .text-group {
       margin-top: 40px;
+    }
+    #shopify-section-{{ section.id }} .bottom-image {
+      margin-top: -240px;
     }
   }
   @media (max-width: 999px) {
@@ -114,6 +131,9 @@
     }
     #shopify-section-{{ section.id }} .text-item-box {
       text-align: left;
+    }
+    #shopify-section-{{ section.id }} .bottom-image {
+      margin-top: -90px;
     }
   }
 {% endstyle %}
@@ -248,6 +268,12 @@
       </div>
     {%- endif -%}
   </div>
+
+  {%- if section.settings.bottom_image != blank -%}
+    <div class="bottom-image">
+      <img src="{{ section.settings.bottom_image | image_url: width: 2000 }}">
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -263,6 +289,11 @@
       "type": "image_picker",
       "id": "main_image",
       "label": "Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
     },
     {
       "type": "select",

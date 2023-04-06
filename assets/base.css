@@ -87,3 +87,10 @@ nav#AccessibleNav .site-nav {
   justify-content: center;
   align-items: center;
 }
+
+.header-mobile {
+  position: absolute;
+  background-color: transparent !important;
+  box-shadow: unset;
+  width: 100%;
+}
