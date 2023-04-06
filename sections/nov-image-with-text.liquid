@@ -1,0 +1,444 @@
+{% style %}
+  /* image graou */
+  #shopify-section-{{ section.id }} .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  #shopify-section-{{ section.id }} .image-group {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }} .image-group .thumb-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: center;
+    gap: 24px;
+  }
+  #shopify-section-{{ section.id }} .image-group .thumb-blocks .block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }} .image-group .thumb-blocks .thumb-label {
+    font-size: 12px;
+    line-height: 14px;
+    color: #3F4D6A;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  /* text group */
+  #shopify-section-{{ section.id }} .text-group {
+    width: calc(100% - 500px);
+  }
+  #shopify-section-{{ section.id }} .text-group .title-box .top-title {
+    color: {{ section.settings.top-title__color }};
+  }
+  #shopify-section-{{ section.id }} .text-group .title-box .heading {
+    color: {{ section.settings.heading__color }};
+  }
+  #shopify-section-{{ section.id }} .text-group .title-box .subtitle {
+    color: {{ section.settings.subtitle__color }};
+  }
+
+  #shopify-section-{{ section.id }} .rich-text {
+    margin-top: 28px;
+  }
+  #shopify-section-{{ section.id }} .rich-text .text-title {
+    color: {{ section.settings.text-title__color }};
+    margin-bottom: 14px;
+    line-height: 26px;
+  }
+  #shopify-section-{{ section.id }} .rich-text .description {
+    color: {{ section.settings.rich-text__color }};
+    line-height: 24px;
+  }
+
+
+  #shopify-section-{{ section.id }} .text-item-box {
+    margin-top: 24px;
+  }
+  #shopify-section-{{ section.id }} .text-item-box .item-title {
+    color: {{ section.settings.item-title__color }};
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
+  #shopify-section-{{ section.id }} .text-item-box .item-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #shopify-section-{{ section.id }} .text-item-box .item-list .item-text {
+    color: {{ section.settings.item-text__color }};
+    line-height: 24px;
+    width: 50%;
+    margin-bottom: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .bottom-text {
+    color: {{ section.settings.bottom-text__color }};
+    margin-top: 56px;
+  }
+
+  #shopify-section-{{ section.id }} .link-wrap {
+    margin: 40px 0px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    #shopify-section-{{ section.id }} .text-group {
+      width: calc(100% - 450px);
+    }
+    #shopify-section-{{ section.id }} .text-item-box .item-list {
+      flex-direction: column;
+    }
+    #shopify-section-{{ section.id }} .text-item-box .item-list .item-text {
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }} .text-group {
+      margin-top: 40px;
+    }
+  }
+  @media (max-width: 999px) {
+    #shopify-section-{{ section.id }} .container {
+      flex-direction: column;
+    }
+    #shopify-section-{{ section.id }} .image-group,
+    #shopify-section-{{ section.id }} .text-group {
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }} .text-group {
+      text-align: center;
+    }
+    #shopify-section-{{ section.id }} .text-item-box {
+      text-align: left;
+    }
+  }
+{% endstyle %}
+
+<div class="section-content">
+  <div class="page-width container">
+    {%- if section.settings.image_position == 'first_image' -%}
+      <div class="image-group">
+        {%- if section.settings.main_image != blank -%}
+          <div class="main-image">
+            <img src="{{ section.settings.main_image | image_url: width: 1000 }}">
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="thumb-blocks">
+            {%- for block in section.blocks -%}
+              <div class="block">
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | image_url: width: 80 }}">
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <div class="thumb-label font-500">{{ block.settings.label }}</div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="text-group">
+      <div class="title-box">
+        {%- if section.settings.top_title != blank -%}
+          <p class="top-title h3 font-600">{{ section.settings.top_title }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <p class="heading h2 font-700">{{ section.settings.heading }}</p>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="subtitle h3 font-600">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="rich-text">
+        {%- if section.settings.text_title != blank -%}
+          <div class="text-title font-700 h4">{{ section.settings.text_title }}</div>
+        {%- endif -%}
+        {%- if section.settings.rich_text != blank -%}
+          <div class="description font-400 h6">{{ section.settings.rich_text }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="text-item-box">
+        {%- if section.settings.item_title != blank -%}
+          <div class="item-title font-700 h4">{{ section.settings.item_title }}</div>
+        {%- endif -%}
+        <div class="item-list">
+          {%- if section.settings.item_text1 != blank -%}
+            <div class="item-text font-700 h4">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19082 1.44565C9.56758 -0.481884 12.4323 -0.481884 13.8092 1.44565L14.0284 1.75252C14.2707 2.09176 14.6776 2.2734 15.0918 2.22737L16.0688 2.11881C18.2676 1.87451 20.1255 3.73239 19.8812 5.93116L19.7727 6.90816C19.7267 7.32248 19.9082 7.72931 20.2475 7.97163L20.5544 8.19082C22.4819 9.56758 22.4819 12.4323 20.5544 13.8092L20.2475 14.0284C19.9082 14.2707 19.7267 14.6776 19.7727 15.0918L19.8812 16.0688C20.1255 18.2676 18.2676 20.1255 16.0688 19.8812L15.0918 19.7727C14.6776 19.7267 14.2707 19.9082 14.0284 20.2475L13.8092 20.5544C12.4323 22.4819 9.56769 22.4819 8.19082 20.5544L7.97163 20.2475C7.72931 19.9082 7.32248 19.7267 6.90815 19.7727L5.93116 19.8812C3.73239 20.1255 1.87451 18.2676 2.11881 16.0688L2.22737 15.0918C2.2734 14.6776 2.09176 14.2707 1.75252 14.0284L1.44565 13.8092C-0.481884 12.4323 -0.481884 9.56769 1.44565 8.19082L1.75252 7.97163C2.09176 7.72931 2.2734 7.32248 2.22737 6.90815L2.11881 5.93116C1.87451 3.73239 3.73239 1.87451 5.93116 2.11881L6.90816 2.22737C7.32248 2.2734 7.72931 2.09176 7.97163 1.75252L8.19082 1.44565ZM15.2659 7.88484C15.7153 8.33424 15.7153 9.06286 15.2659 9.51223L10.8714 13.9068C10.3069 14.4713 9.39163 14.4713 8.82719 13.9068L6.7341 11.8137C6.28471 11.3643 6.28471 10.6357 6.7341 10.1863C7.1835 9.73697 7.9121 9.73697 8.3615 10.1863L9.84928 11.6741L13.6385 7.88484C14.0879 7.43545 14.8166 7.43545 15.2659 7.88484Z" fill="#456635"/>
+              </svg>
+              {{ section.settings.item_text1 }}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.item_text2 != blank -%}
+            <div class="item-text font-700 h4">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19082 1.44565C9.56758 -0.481884 12.4323 -0.481884 13.8092 1.44565L14.0284 1.75252C14.2707 2.09176 14.6776 2.2734 15.0918 2.22737L16.0688 2.11881C18.2676 1.87451 20.1255 3.73239 19.8812 5.93116L19.7727 6.90816C19.7267 7.32248 19.9082 7.72931 20.2475 7.97163L20.5544 8.19082C22.4819 9.56758 22.4819 12.4323 20.5544 13.8092L20.2475 14.0284C19.9082 14.2707 19.7267 14.6776 19.7727 15.0918L19.8812 16.0688C20.1255 18.2676 18.2676 20.1255 16.0688 19.8812L15.0918 19.7727C14.6776 19.7267 14.2707 19.9082 14.0284 20.2475L13.8092 20.5544C12.4323 22.4819 9.56769 22.4819 8.19082 20.5544L7.97163 20.2475C7.72931 19.9082 7.32248 19.7267 6.90815 19.7727L5.93116 19.8812C3.73239 20.1255 1.87451 18.2676 2.11881 16.0688L2.22737 15.0918C2.2734 14.6776 2.09176 14.2707 1.75252 14.0284L1.44565 13.8092C-0.481884 12.4323 -0.481884 9.56769 1.44565 8.19082L1.75252 7.97163C2.09176 7.72931 2.2734 7.32248 2.22737 6.90815L2.11881 5.93116C1.87451 3.73239 3.73239 1.87451 5.93116 2.11881L6.90816 2.22737C7.32248 2.2734 7.72931 2.09176 7.97163 1.75252L8.19082 1.44565ZM15.2659 7.88484C15.7153 8.33424 15.7153 9.06286 15.2659 9.51223L10.8714 13.9068C10.3069 14.4713 9.39163 14.4713 8.82719 13.9068L6.7341 11.8137C6.28471 11.3643 6.28471 10.6357 6.7341 10.1863C7.1835 9.73697 7.9121 9.73697 8.3615 10.1863L9.84928 11.6741L13.6385 7.88484C14.0879 7.43545 14.8166 7.43545 15.2659 7.88484Z" fill="#456635"/>
+              </svg>
+              {{ section.settings.item_text2 }}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.item_text3 != blank -%}
+            <div class="item-text font-700 h4">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19082 1.44565C9.56758 -0.481884 12.4323 -0.481884 13.8092 1.44565L14.0284 1.75252C14.2707 2.09176 14.6776 2.2734 15.0918 2.22737L16.0688 2.11881C18.2676 1.87451 20.1255 3.73239 19.8812 5.93116L19.7727 6.90816C19.7267 7.32248 19.9082 7.72931 20.2475 7.97163L20.5544 8.19082C22.4819 9.56758 22.4819 12.4323 20.5544 13.8092L20.2475 14.0284C19.9082 14.2707 19.7267 14.6776 19.7727 15.0918L19.8812 16.0688C20.1255 18.2676 18.2676 20.1255 16.0688 19.8812L15.0918 19.7727C14.6776 19.7267 14.2707 19.9082 14.0284 20.2475L13.8092 20.5544C12.4323 22.4819 9.56769 22.4819 8.19082 20.5544L7.97163 20.2475C7.72931 19.9082 7.32248 19.7267 6.90815 19.7727L5.93116 19.8812C3.73239 20.1255 1.87451 18.2676 2.11881 16.0688L2.22737 15.0918C2.2734 14.6776 2.09176 14.2707 1.75252 14.0284L1.44565 13.8092C-0.481884 12.4323 -0.481884 9.56769 1.44565 8.19082L1.75252 7.97163C2.09176 7.72931 2.2734 7.32248 2.22737 6.90815L2.11881 5.93116C1.87451 3.73239 3.73239 1.87451 5.93116 2.11881L6.90816 2.22737C7.32248 2.2734 7.72931 2.09176 7.97163 1.75252L8.19082 1.44565ZM15.2659 7.88484C15.7153 8.33424 15.7153 9.06286 15.2659 9.51223L10.8714 13.9068C10.3069 14.4713 9.39163 14.4713 8.82719 13.9068L6.7341 11.8137C6.28471 11.3643 6.28471 10.6357 6.7341 10.1863C7.1835 9.73697 7.9121 9.73697 8.3615 10.1863L9.84928 11.6741L13.6385 7.88484C14.0879 7.43545 14.8166 7.43545 15.2659 7.88484Z" fill="#456635"/>
+              </svg>
+              {{ section.settings.item_text3 }}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.item_text4 != blank -%}
+            <div class="item-text font-700 h4">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19082 1.44565C9.56758 -0.481884 12.4323 -0.481884 13.8092 1.44565L14.0284 1.75252C14.2707 2.09176 14.6776 2.2734 15.0918 2.22737L16.0688 2.11881C18.2676 1.87451 20.1255 3.73239 19.8812 5.93116L19.7727 6.90816C19.7267 7.32248 19.9082 7.72931 20.2475 7.97163L20.5544 8.19082C22.4819 9.56758 22.4819 12.4323 20.5544 13.8092L20.2475 14.0284C19.9082 14.2707 19.7267 14.6776 19.7727 15.0918L19.8812 16.0688C20.1255 18.2676 18.2676 20.1255 16.0688 19.8812L15.0918 19.7727C14.6776 19.7267 14.2707 19.9082 14.0284 20.2475L13.8092 20.5544C12.4323 22.4819 9.56769 22.4819 8.19082 20.5544L7.97163 20.2475C7.72931 19.9082 7.32248 19.7267 6.90815 19.7727L5.93116 19.8812C3.73239 20.1255 1.87451 18.2676 2.11881 16.0688L2.22737 15.0918C2.2734 14.6776 2.09176 14.2707 1.75252 14.0284L1.44565 13.8092C-0.481884 12.4323 -0.481884 9.56769 1.44565 8.19082L1.75252 7.97163C2.09176 7.72931 2.2734 7.32248 2.22737 6.90815L2.11881 5.93116C1.87451 3.73239 3.73239 1.87451 5.93116 2.11881L6.90816 2.22737C7.32248 2.2734 7.72931 2.09176 7.97163 1.75252L8.19082 1.44565ZM15.2659 7.88484C15.7153 8.33424 15.7153 9.06286 15.2659 9.51223L10.8714 13.9068C10.3069 14.4713 9.39163 14.4713 8.82719 13.9068L6.7341 11.8137C6.28471 11.3643 6.28471 10.6357 6.7341 10.1863C7.1835 9.73697 7.9121 9.73697 8.3615 10.1863L9.84928 11.6741L13.6385 7.88484C14.0879 7.43545 14.8166 7.43545 15.2659 7.88484Z" fill="#456635"/>
+              </svg>
+              {{ section.settings.item_text4 }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="bottom-text">
+        {%- if section.settings.bottom_text != blank -%}
+          <div class="font-700 h3">{{ section.settings.bottom_text }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="link-wrap">
+        {% if section.settings.button_text != blank %}
+          <a
+            class="font-700 text-uppercase font-700 site-button button_L"
+            href="{{ section.settings.button_link }}"
+          >
+            {{- section.settings.button_text -}}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    {%- if section.settings.image_position == 'second_image' -%}
+      <div class="image-group">
+        {%- if section.settings.main_image != blank -%}
+          <div class="main-image">
+            <img src="{{ section.settings.main_image | image_url: width: 1000 }}">
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="thumb-blocks">
+            {%- for block in section.blocks -%}
+              <div class="block">
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | image_url: width: 80 }}">
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <div class="thumb-label font-500">{{ block.settings.label }}</div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Block Image Text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "options": [
+        {
+          "value": "first_image",
+          "label": "First image"
+        },
+        {
+          "value": "second_image",
+          "label": "Second image"
+        }
+      ],
+      "label": "Image position",
+      "default": "first_image"
+    },
+    {
+      "type": "header",
+      "content": "Title settings"
+    },
+    {
+      "type": "text",
+      "id": "top_title",
+      "label": "Top title",
+      "default": "Top title"
+    },
+    {
+      "type": "color",
+      "id": "top-title__color",
+      "label": "Top title color"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "heading__color",
+      "label": "Heading color"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub title",
+      "default": "Sub title"
+    },
+    {
+      "type": "color",
+      "id": "subtitle__color",
+      "label": "Subtitle color"
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "text",
+      "id": "text_title",
+      "label": "Text title",
+      "default": "Text title"
+    },
+    {
+      "type": "color",
+      "id": "text-title__color",
+      "label": "Title color"
+    },
+    {
+      "type": "richtext",
+      "id": "rich_text",
+      "label": "Rich text"
+    },
+    {
+      "type": "color",
+      "id": "rich-text__color",
+      "label": "Text color"
+    },
+    {
+      "type": "header",
+      "content": "Text item list"
+    },
+    {
+      "type": "text",
+      "id": "item_title",
+      "label": "Item title",
+      "default": "Item title"
+    },
+    {
+      "type": "color",
+      "id": "item-title__color",
+      "label": "Item title color"
+    },
+    {
+      "type": "color",
+      "id": "item-text__color",
+      "label": "Item text color"
+    },
+    {
+      "type": "text",
+      "id": "item_text1",
+      "label": "Item1",
+      "default": "Item1"
+    },
+    {
+      "type": "text",
+      "id": "item_text2",
+      "label": "Item2",
+      "default": "Item2"
+    },
+    {
+      "type": "text",
+      "id": "item_text3",
+      "label": "Item3",
+      "default": "Item3"
+    },
+    {
+      "type": "text",
+      "id": "item_text4",
+      "label": "Item4",
+      "default": "Item4"
+    },
+    {
+      "type": "header",
+      "content": "Bottom text"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Text",
+      "default": "Text"
+    },
+    {
+      "type": "color",
+      "id": "bottom-text__color",
+      "label": "color"
+    },
+    {
+      "type": "header",
+      "content": "Button settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_image",
+      "name": "Block image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "label",
+          "label": "Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Block Image Text"
+    }
+  ]
+}
+{% endschema %}

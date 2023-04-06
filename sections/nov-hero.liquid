@@ -1,0 +1,216 @@
+{% style %}
+  #shopify-section-{{ section.id }} .section-content.h_L {
+    height: 860px;
+  }
+  #shopify-section-{{ section.id }} .section-content.h_M {
+    height: 680px;
+  }
+  #shopify-section-{{ section.id }} .section-content.h_S {
+    height: 500px;
+  }
+  #shopify-section-{{ section.id }} .section-content {
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .background-image,
+  #shopify-section-{{ section.id }} .background-image img
+  {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+  }
+  #shopify-section-{{ section.id }} .section-content .page-width {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+  #shopify-section-{{ section.id }} .section-content .top-title {
+    color: {{ section.settings.top_title_color }};
+  }
+  #shopify-section-{{ section.id }} .section-content .heading {
+    color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .link-wrap {
+    background-image: url({{ 'circle.png' | asset_url }});
+    background-size: contain;
+    background-repeat: no-repeat;
+    min-width: 314px;
+    min-height: 314px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .nav-text {
+    color: {{ section.settings.nav-text_color }};
+    margin-top: 12px;
+  }
+  @media(max-width: 999px) {
+    #shopify-section-{{ section.id }} .section-content.h_L {
+      height: 650px;
+    }
+    #shopify-section-{{ section.id }} .section-content.h_M {
+      height: 450px;
+    }
+    #shopify-section-{{ section.id }} .section-content.h_S {
+      height: 380px;
+    }
+    #shopify-section-{{ section.id }} .link-wrap {
+      min-width: 250px;
+      min-height: 250px;
+    }
+  }
+  @media(max-width: 500px) {
+    #shopify-section-{{ section.id }} .section-content.h_L {
+      height: 490px;
+    }
+    #shopify-section-{{ section.id }} .section-content.h_M {
+      height: 450px;
+    }
+    #shopify-section-{{ section.id }} .section-content.h_S {
+      height: 400px;
+    }
+    #shopify-section-{{ section.id }} .link-wrap {
+      min-width: 200px;
+      min-height: 200px;
+    }
+    #shopify-section-{{ section.id }} .section-content .page-width {
+      gap: 18px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-content {{ section.settings.background_height }}">
+  {% if section.settings.background_image != blank %}
+    <div class="background-image">
+      <img src="{{ section.settings.background_image | image_url: width: 2000 }}">
+    </div>
+  {% endif %}
+  <div class="page-width container">
+    <div class="title-box">
+      {% if section.settings.top_title != blank %}
+        <div class="top-title h4">{{ section.settings.top_title }}</div>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <div class="heading h1">{{ section.settings.heading }}</div>
+      {% endif %}
+    </div>
+    <div class="link-wrap">
+      {% if section.settings.button_text != blank %}
+        <a
+          class="font-700 text-uppercase font-700 hero-button site-button button_L"
+          href="{{ section.settings.button_link }}"
+        >
+          {{- section.settings.button_text -}}
+        </a>
+      {% endif %}
+      {% if section.settings.nav_text != blank %}
+        <p class="nav-text h6 font-300">{{ section.settings.nav_text }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "background_height",
+      "options": [
+        {
+          "value": "h_L",
+          "label": "L"
+        },
+        {
+          "value": "h_M",
+          "label": "M"
+        },
+        {
+          "value": "h_S",
+          "label": "S"
+        }
+      ],
+      "label": "Background Height",
+      "default": "h_L"
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "text",
+      "id": "top_title",
+      "label": "Top title",
+      "default": "Top title"
+    },
+    {
+      "type": "color",
+      "id": "top_title_color",
+      "label": "Top title color",
+      "default": "#fff"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Vinova Hero</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Button settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button text"
+    },
+    {
+      "type": "text",
+      "id": "nav_text",
+      "label": "Text",
+      "default": "Nav text"
+    },
+    {
+      "type": "color",
+      "id": "nav-text_color",
+      "label": "Text color",
+      "default": "#fff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Hero"
+    }
+  ]
+}
+{% endschema %}

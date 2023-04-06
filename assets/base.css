@@ -25,6 +25,10 @@ body {
 }
 
 /* main menue */
+#shopify-section-nov-header {
+  z-index: 1;
+}
+
 nav#AccessibleNav .site-nav>li .site-nav__link--main {
   font-weight: 600;
   font-size: 18px;
@@ -82,35 +86,4 @@ nav#AccessibleNav .site-nav {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.site-header .order_btn {
-  position: relative;
-  background: linear-gradient(180deg, #EA7503 0%, #FF9314 0.01%, #EA7503 100%);
-  box-shadow: 0px 6px 10px rgba(238, 114, 0, 0.3);
-  border-radius: 34px;
-  font-size: 16px;
-  line-height: 19px;
-  color: #fff;
-  padding: 12px 28px;
-  height: auto;
-}
-
-.site-header .order_btn::before {
-  position: absolute;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  content: "";
-  top: -2px;
-  left: -2px;
-  border-radius: 34px;
-  opacity: .3;
-  border: 1px solid #FFFFFF;
-}
-
-@media (max-width: 1200px) {
-  .site-header .order_btn {
-    font-size: 13px;
-    line-height: 16px;
-  }
 }

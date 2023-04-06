@@ -125,7 +125,7 @@
               </div>
             </div>
             {% if section.settings.order != blank %}
-              <a class="order_btn font-700 text-uppercase" href="{{ section.settings.order_link }}">
+              <a class="order_btn font-700 button_S site-button text-uppercase" href="{{ section.settings.order_link }}">
                 {{- section.settings.order -}}
               </a>
             {% endif %}
@@ -790,6 +790,10 @@
 }
 {% endschema %}
 <style>
+  #shopify-section-nov-header {
+    position: absolute;
+    width: 100%;
+  }
   .site-header .header-center {
     background-color: {{ section.settings.background_color }};
   }
@@ -798,5 +802,10 @@
   }
   .header-mobile .item-mobile-top {
     color: {{ section.settings.c_icon_m }};
+  }
+  @media(max-width: 767px) {
+    #shopify-section-nov-header {
+      position: relative;
+    }
   }
 </style>
