@@ -53,11 +53,19 @@
     {% include 'nov-head-css' %}
     {% include 'nov-head-js' %}
     <script src="{{ 'shopify_global.js' | asset_url }}" defer="defer"></script>
+    
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'common.css' | asset_url | stylesheet_tag }}
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   {{ content_for_header }}
   </head>
 
   <body class="template-{{ template | split: '.' | first }}">
     <a class="in-page-link hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+    {% section 'announcement-bar' %}
     {% section 'nov-header' %}
     <main class="main-content" id="MainContent">
       <section class="page-container" id="PageContainer">

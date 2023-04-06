@@ -1,0 +1,116 @@
+body {
+  font-family: 'Roboto';
+}
+
+/* announcement-bar */
+#shopify-section-announcement-bar .announcement-bar .announcement-bar__message {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#shopify-section-announcement-bar .announcement-bar .announcement-bar__message div {
+  display: flex;
+}
+
+@media (max-width: 500px) {
+  #shopify-section-announcement-bar .announcement-bar .announcement-bar__message {
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+/* main menue */
+nav#AccessibleNav .site-nav>li .site-nav__link--main {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px;
+  color: #BFBFBF;
+}
+
+nav#AccessibleNav .site-nav>li:nth-child(1) .site-nav__link--main {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #fff;
+}
+
+nav#AccessibleNav .site-nav>li:nth-child(1) .site-nav__link--main span {
+  z-index: 1;
+}
+
+nav#AccessibleNav .site-nav>li:nth-child(1) .site-nav__link--main::before {
+  position: absolute;
+  content: "";
+  background: rgba(234, 117, 3, 0.7);
+  width: 36px;
+  height: 24px;
+  left: -11px;
+}
+
+nav#AccessibleNav .site-nav {
+  text-align: left;
+}
+
+.search__btn-overlay {
+  background: none;
+}
+
+.site-header__cart {
+  margin-top: -28px;
+}
+
+.site-header__cart .site-header__cart-icon {
+  background-image: none;
+  position: relative;
+}
+
+.site-header__cart .site-header__cart-icon .num-cartcount {
+  position: absolute;
+  top: 0px;
+  right: -16px;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 12px;
+  color: #fff;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.site-header .order_btn {
+  position: relative;
+  background: linear-gradient(180deg, #EA7503 0%, #FF9314 0.01%, #EA7503 100%);
+  box-shadow: 0px 6px 10px rgba(238, 114, 0, 0.3);
+  border-radius: 34px;
+  font-size: 16px;
+  line-height: 19px;
+  color: #fff;
+  padding: 12px 28px;
+  height: auto;
+}
+
+.site-header .order_btn::before {
+  position: absolute;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  content: "";
+  top: -2px;
+  left: -2px;
+  border-radius: 34px;
+  opacity: .3;
+  border: 1px solid #FFFFFF;
+}
+
+@media (max-width: 1200px) {
+  .site-header .order_btn {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
