@@ -1,0 +1,246 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 38px;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item {
+    position: relative;
+    width: calc(33.33% - 38px * 2 / 3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} .product-list .discount-text {
+    color: {{ section.settings.discount-text__color }};
+  }
+  #shopify-section-{{ section.id }} .product-list .discount-description p {
+    color: {{ section.settings.discount-description__color }};
+    line-height: 24px;
+    padding: 0px 30px;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item .product-image {
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item .product-image .save-price {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item .product-image .save-price svg {
+    scale: 1.2;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item .product-image .save-price .price {
+    position: absolute;
+    top: 9px;
+    left: 8px;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item * {
+    z-index: 2;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item .bg-image {
+    position: absolute;
+    z-index: 1;
+    top: 82px;
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .product-list .product-item .bg-image img {
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .bottom-image {
+    display: flex;
+    justify-content: center;
+    margin-top: 144px;
+  }
+  @media (max-width: 1400px) {
+    #shopify-section-{{ section.id }} .product-list .product-item .bg-image,
+    #shopify-section-{{ section.id }} .product-list .product-item .bg-image img {
+      height: 100%;
+    }
+  }
+  @media (max-width: 999px) {
+    #shopify-section-{{ section.id }} .product-list .product-item {
+      width: calc(50% - 68px / 2);
+      margin-bottom: 30px;
+    }
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .product-list .product-item {
+      width: 100%;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-content">
+  <div class="product-list container">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="product-item">
+          <div class="bg-image">
+            {%- if section.settings.bg_image != blank -%}
+              <img src="{{ section.settings.bg_image | image_url: width: 500 }}">
+            {%- endif -%}
+          </div>
+          <div class="product-image">
+            {%- if block.settings.product_image != blank -%}
+              <img src="{{ block.settings.product_image | image_url: width: 500 }}">
+            {%- endif -%}
+            <div class="save-price">
+              <svg width="83" height="78" viewBox="0 0 83 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_59_484)">
+                <path d="M10 20.2947C10 15.2923 13.6965 11.0595 18.6534 10.3858L61.6534 4.54204C67.6562 3.72624 73 8.39291 73 14.4509V45.7053C73 50.7077 69.3035 54.9406 64.3466 55.6142L21.3466 61.458C15.3438 62.2738 10 57.6071 10 51.5491V20.2947Z" fill="url(#paint0_linear_59_484)"/>
+                </g>
+                <defs>
+                <filter id="filter0_d_59_484" x="0" y="0.449219" width="83" height="77.1016" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset dy="6"/>
+                <feGaussianBlur stdDeviation="5"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0.933333 0 0 0 0 0.448 0 0 0 0 0 0 0 0 0.3 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_59_484"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_59_484" result="shape"/>
+                </filter>
+                <linearGradient id="paint0_linear_59_484" x1="41.5" y1="3" x2="41.5" y2="63" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#EA7503"/>
+                <stop offset="0.0001" stop-color="#FF9314"/>
+                <stop offset="1" stop-color="#EA7503"/>
+                </linearGradient>
+                </defs>
+              </svg>
+              <div class="price">
+                <p class="str-save">save</p>
+                {% assign price = block.settings.product.price | times: block.settings.product_count %}
+                {% assign com_price = block.settings.product.compare_at_price | times: block.settings.product_count %}
+                {% assign save_price = price | minus: com_price | abs %}
+                <p class="font-700 h4">{{ save_price | money }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="discount-text">
+            {%- if block.settings.discount_text != blank -%}
+              <p class="h4 font-700">{{ block.settings.discount_text }}</p>
+            {%- endif -%}
+          </div>
+          <div class="discount-description">
+            {%- if block.settings.description != blank -%}
+              <p class="h6 font-400">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+          <div class="product-total-price">
+            <p class="h3 font-700">{{ block.settings.product.price | times: block.settings.product_count | money }}</p>
+          </div>
+          {% if block.settings.button_text != blank %}
+            <a
+              class="font-700 text-uppercase font-700 hero-button site-button button_S"
+              href="{{ block.settings.button_link }}"
+            >
+              {{- block.settings.button_text -}}
+            </a>
+          {% endif %}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  {% if section.settings.bottom_image != blank %}
+    <div class="bottom-image">
+      <img src="{{ section.settings.bottom_image | image_url: width: 2000 }}">
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Related Products",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
+    },
+    {
+      "type": "header",
+      "content": "Block product settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Block background image"
+    },
+    {
+      "type": "color",
+      "id": "discount-text__color",
+      "label": "Title color"
+    },
+    {
+      "type": "color",
+      "id": "discount-description__color",
+      "label": "Text color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "number",
+          "id": "product_count",
+          "label": "Product count"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "discount_text",
+          "label": "Discount text"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Button"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Related Products"
+    }
+  ]
+}
+{% endschema %}
