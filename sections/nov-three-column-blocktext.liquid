@@ -1,0 +1,335 @@
+{% style %}
+  #shopify-section-{{ section.id }} .section-content {
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .section-main-content {
+    padding: 200px 0px 100px 0px;
+  }
+  #shopify-section-{{ section.id }} .background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  #shopify-section-{{ section.id }} .background-image.mobile {
+    display: none;
+  }
+  #shopify-section-{{ section.id }} .background-image img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    object-position: top;
+  }
+  #shopify-section-{{ section.id }} .title-box {
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .title-box .heading {
+    color: {{ section.settings.heading_color }};
+    line-height: 37px;
+  }
+  #shopify-section-{{ section.id }} .title-box .subtitle {
+    color: {{ section.settings.subtitle_color }};
+    line-height: 30px;
+    margin-top: 50px;
+  }
+  #shopify-section-{{ section.id }} .text-box {
+    margin-top: 35px;
+  }
+  #shopify-section-{{ section.id }} .text-box .item {
+    margin-bottom: 20px;
+  }
+  #shopify-section-{{ section.id }} .text-box .item .title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #shopify-section-{{ section.id }} .text-box .item .subtitle {
+    font-size: 12px;
+    margin-left: 46px;
+  }
+  #shopify-section-{{ section.id }} .text-box .item .text {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 40px;
+  }
+  #shopify-section-{{ section.id }} .text-box .item .text ul{
+    padding-left: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .bottom-text {
+    margin-top: 110px;
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} .bottom-text p {
+    font-size: 14px;
+    color: {{ section.settings.bottom_text__color }};
+  }
+
+  @media(max-width: 999px) {
+    #shopify-section-{{ section.id }} .background-image img {
+    }
+  }
+  @media(max-width: 767px) {
+    #shopify-section-{{ section.id }} .background-image.desktop {
+      display: none;
+    }
+    #shopify-section-{{ section.id }} .background-image.mobile {
+      display: block;
+    }
+    #shopify-section-{{ section.id }} .bottom-text {
+      margin-top: 35px;
+      text-align: center;
+    }
+    #shopify-section-{{ section.id }} .maing-product {
+      display: flex;
+      justify-content: center;
+    }
+    #shopify-section-{{ section.id }} .section-main-content {
+      padding: 80px 0px 100px 0px;
+    }
+  }
+{% endstyle %}
+<div class="section-content">
+  {%- if section.settings.background_image != blank -%}
+    <div class="desktop background-image">
+      <img src="{{ section.settings.background_image | image_url: width: 2000 }}">
+    </div>
+  {%- endif -%}
+  {%- if section.settings.mob_background_image != blank or section.settings.background_image -%}
+    <div class="mobile background-image">
+      {%- if section.settings.mob_background_image != blank %}
+        <img src="{{ section.settings.mob_background_image | image_url: width: 800 }}">
+      {%- else -%}
+        <img src="{{ section.settings.background_image | image_url: width: 2000 }}">
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="container section-main-content">
+    <div class="title-box">
+      {% if section.settings.heading != blank %}
+        <div class="heading h2 font-700">{{ section.settings.heading }}</div>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <div class="subtitle h5 font-700">{{ section.settings.subtitle }}</div>
+      {% endif %}
+    </div>
+    <div class="text-box row mr-0 ml-0 pl-15 pr-15">
+      {%- if section.blocks.size > 0 -%}
+        <div class="col-md-4 col-xs-12">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text_column == 'left' -%}
+              <div class="item">
+                {%- if block.settings.title != blank -%}
+                  <div class="title h5" style="color: {{ block.settings.title_color }};">
+                    {%- if section.settings.item_image != blank -%}
+                      <img src="{{ section.settings.item_image | image_url: width: 40 }}">
+                    {%- endif -%}
+                    <p>{{ block.settings.title }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <div class="subtitle" style="color: {{ block.settings.subtitle_color }};">
+                    {{ block.settings.subtitle }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="text" style="color: {{ block.settings.text_color }};">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <div class="col-md-4 col-xs-12">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text_column == 'center' -%}
+              <div class="item">
+                {%- if block.settings.title != blank -%}
+                  <div class="title h5" style="color: {{ block.settings.title_color }};">
+                    {%- if section.settings.item_image != blank -%}
+                      <img src="{{ section.settings.item_image | image_url: width: 40 }}">
+                    {%- endif -%}
+                    <p>{{ block.settings.title }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <div class="subtitle" style="color: {{ block.settings.subtitle_color }};">
+                    {{ block.settings.subtitle }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="text" style="color: {{ block.settings.text_color }};">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if section.settings.main_image != blank -%}
+            <div class="item maing-product">
+              <img src="{{ section.settings.main_image | image_url: width: 500 }}">
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="col-md-4 col-xs-12">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text_column == 'right' -%}
+              <div class="item">
+                {%- if block.settings.title != blank -%}
+                  <div class="title h5" style="color: {{ block.settings.title_color }};">
+                    {%- if section.settings.item_image != blank -%}
+                      <img src="{{ section.settings.item_image | image_url: width: 40 }}">
+                    {%- endif -%}
+                    <p>{{ block.settings.title }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <div class="subtitle" style="color: {{ block.settings.subtitle_color }};">
+                    {{ block.settings.subtitle }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="text" style="color: {{ block.settings.text_color }};">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="bottom-text col-md 12">
+      {% if section.settings.heading != blank %}
+        <p class="font-400">{{ section.settings.bottom_text }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Three Column",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mob_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_image",
+      "label": "Item image"
+    },
+    {
+      "type": "header",
+      "content": "Title settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color"
+    },
+    {
+      "type": "textarea",
+      "id": "bottom_text",
+      "label": "Bottom text"
+    },
+    {
+      "type": "color",
+      "id": "bottom_text__color",
+      "label": "Bottom text color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_text",
+      "name": "Block text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "text_column",
+          "label": "Text column",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Subtitle color"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Three Column"
+    }
+  ]
+}
+{% endschema %}
