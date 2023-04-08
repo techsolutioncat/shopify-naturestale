@@ -1,0 +1,284 @@
+{% style %}
+  #shopify-section-{{ section.id }} .section-content {
+    margin-top: -190px;
+    {%- if section.settings.background_image != blank -%}
+      background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
+      background-size: cover;
+    {%- endif -%}
+  }
+  #shopify-section-{{ section.id }} .section-content .section-main-content {
+    display: flex;
+    min-height: 900px;
+    align-items: center;
+  }
+  #shopify-section-{{ section.id }} .section-content .half-width {
+    width: 50%;
+  }
+  #shopify-section-{{ section.id }} .text-box .heading {
+    color: {{ section.settings.heading_color }};
+    line-height: 70px;
+  }
+  #shopify-section-{{ section.id }} .text-box .text {
+    color: {{ section.settings.text_color }};
+    line-height: 30px;
+    margin-top: 50px;
+  }
+  #shopify-section-{{ section.id }} .second-box .second-heading {
+    color: {{ section.settings.second_heading_color }};
+    line-height: 44px;
+  }
+  #shopify-section-{{ section.id }} .second-box .second-text {
+    color: {{ section.settings.second_text_color }};
+    line-height: 24px;
+    margin-top: 25px;
+  }
+  #shopify-section-{{ section.id }} .second-item-box .item-box {
+    color: {{ section.settings.second_textlist_color }}
+  }
+  #shopify-section-{{ section.id }} .second-item-box .item {
+    color: {{ section.settings.second_textlist_color }};
+    width: 50%;
+    margin-bottom: 10px;
+  }
+  #shopify-section-{{ section.id }} .second-item-box {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 13px;
+  }
+  #shopify-section-{{ section.id }} .main-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .second-textbox {
+    {%- if section.settings.second_image != blank -%}
+      background-image: url("{{ section.settings.second_image | image_url: width: 800 }}");
+    {%- endif -%}
+    height: 560px;
+    width: 575px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    Background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+  }
+  #shopify-section-{{ section.id }} .section-button {
+    margin-top: 45px;
+  }
+  @media (max-width: 1400px) {
+    #shopify-section-{{ section.id }} .second-textbox {
+      height: 536px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #shopify-section-{{ section.id }} .section-content .section-main-content {
+      flex-direction: column;
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+    #shopify-section-{{ section.id }} .section-content .half-width {
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }} .section-content .text-box {
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    #shopify-section-{{ section.id }} .text-box .text {
+      margin-top: 0px;
+    }
+    #shopify-section-{{ section.id }} .second-textbox {
+      height: 560px;
+    }
+  }
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .second-textbox {
+      height: 100%;
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }} .section-content {
+      margin-top: -160px;
+      padding-bottom: 90px;
+    }
+    #shopify-section-{{ section.id }} .second-textbox {
+      {%- if section.settings.mob_background_image != blank -%}
+        background-image: url("{{ section.settings.mob_background_image | image_url: width: 500 }}");
+      {%- endif -%}
+    }
+  }
+  @media (max-width: 500px) {
+    #shopify-section-{{ section.id }} .second-item-box {
+      flex-direction: column;
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }} .second-item-box .item {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="section-content">
+  <div class="container">
+    <div class="section-main-content">
+      <div class="half-width text-box">
+        {% if section.settings.heading != blank %}
+          <div class="heading h2 font-700">{{ section.settings.heading }}</div>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <div class="text h6 font-400">{{ section.settings.text }}</div>
+        {% endif %}
+        <div class="section-button">
+          {% if section.settings.button_text != blank %}
+            <a
+              class="font-700 text-uppercase font-700 hero-button site-button button_L"
+              href="{{ section.settings.button_link }}"
+            >
+              {{- section.settings.button_text -}}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="half-width second-box">
+        <div class="main-box">
+          <div class="second-textbox parellogram">
+            {% if section.settings.second_heading != blank %}
+              <div class="second-heading h3 font-700">{{ section.settings.second_heading }}</div>
+            {% endif %}
+
+            {% if section.blocks.size > 0 %}
+              <div class="second-item-box">
+                {% for block in section.blocks %}
+                  <p class="item font-600 h5">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.2168 13.6112C15.7864 14.352 15.223 15.0112 14.5819 15.5699C13.9389 16.1268 13.2234 16.6056 12.4405 16.9369C11.6594 17.2683 10.8315 17.4799 9.98641 17.5719C9.13957 17.65 8.28581 17.5892 7.45452 17.4192L6.8358 17.2648L6.2361 17.0497C6.13413 17.0185 6.03735 16.9751 5.94229 16.9265L5.65367 16.7912C5.55862 16.7444 5.46011 16.7027 5.36506 16.6542L5.09026 16.4911C4.35575 16.0626 3.67655 15.523 3.11314 14.8742C2.54627 14.2323 2.07273 13.5037 1.71498 12.7178C1.37105 11.9249 1.15502 11.0783 1.05997 10.2144L1.01158 9.56208L1.02886 8.90804C1.02367 8.68772 1.06861 8.47433 1.09108 8.25574L1.13255 7.92959C1.14811 7.82203 1.17922 7.7162 1.20168 7.60864C1.25526 7.39699 1.2881 7.1784 1.35896 6.97022L1.56807 6.34567C1.74263 5.94318 1.912 5.53376 2.14531 5.15903C2.5912 4.39917 3.14252 3.69135 3.81135 3.09977C4.47846 2.50992 5.23544 2.01895 6.05463 1.65117C6.8721 1.27297 7.76215 1.06999 8.66084 0.972839C9.56299 0.870483 10.4824 0.938142 11.3742 1.13591C13.1716 1.51238 14.8238 2.53247 16.0647 3.92902C16.2202 4.12506 16.4777 4.04352 16.3239 3.79891C15.128 2.02589 13.2027 0.702202 11.0441 0.214709C8.8907 -0.272783 6.54891 0.0793911 4.61672 1.17408C2.68107 2.26704 1.20168 4.0921 0.493099 6.15831C-0.237954 8.22625 -0.130802 10.5128 0.646914 12.4732C1.41599 14.4474 2.92303 16.0522 4.70486 16.9959C5.59664 17.4695 6.56101 17.7818 7.54093 17.9241C8.52258 18.0576 9.5146 18.0108 10.4617 17.8165C11.4105 17.6205 12.3144 17.2666 13.1301 16.7739C13.9424 16.2742 14.6613 15.641 15.2576 14.9141C15.8538 14.1872 16.3257 13.3666 16.654 12.494C16.7249 12.2719 16.8165 12.0568 16.8718 11.8313L17.036 11.1529L17.1379 10.4625C17.1673 10.2317 17.1639 9.99753 17.1811 9.76506L16.8908 9.75812C16.9029 10.7817 16.7059 11.8122 16.3101 12.7681C15.9143 13.724 15.3215 14.607 14.5749 15.3409C13.8301 16.0764 12.9331 16.6646 11.9514 17.0532C10.9698 17.4435 9.90519 17.6309 8.83712 17.6048C7.76906 17.5806 6.70445 17.3394 5.7228 16.8936C4.74115 16.4494 3.84592 15.8006 3.10795 15.0008C2.36826 14.2011 1.78756 13.2486 1.41426 12.2147C1.03923 11.1807 0.8785 10.0669 0.935533 8.95835C0.989109 7.90356 1.25699 6.85572 1.72016 5.89981C2.18161 4.94391 2.83489 4.08169 3.62643 3.37561C4.41624 2.66952 5.34259 2.12131 6.33461 1.76914C7.32663 1.41523 8.38259 1.25909 9.42819 1.29552C11.528 1.35971 13.5604 2.25489 15.0519 3.72084C16.5555 5.17985 17.513 7.19228 17.7065 9.33829C17.7411 9.62454 18.0332 9.63494 17.9969 9.33135C17.8033 7.11247 16.8148 5.02371 15.2576 3.51439C13.7143 1.9964 11.6075 1.06826 9.43683 1.00407C8.35321 0.965899 7.26095 1.12724 6.23264 1.49503C5.20606 1.86108 4.2486 2.42838 3.43114 3.16048C2.61367 3.89086 1.93792 4.78257 1.45919 5.77317C0.980467 6.76203 0.702218 7.84631 0.646914 8.93754C0.588153 10.0825 0.754066 11.2362 1.13947 12.3083C1.52487 13.3805 2.1263 14.3659 2.89019 15.1951C3.65408 16.0244 4.58043 16.6958 5.59664 17.1573C6.61286 17.6205 7.71721 17.872 8.82157 17.8963C9.92765 17.9241 11.032 17.7298 12.05 17.3273C13.0679 16.9248 13.9994 16.3159 14.772 15.5543C15.5462 14.7927 16.1632 13.8801 16.5728 12.8878C16.9859 11.8955 17.1915 10.8268 17.1794 9.76332C17.1846 9.48748 16.9046 9.49095 16.8891 9.75638C16.8735 9.98018 16.8752 10.204 16.8476 10.426L16.7508 11.0905L16.5935 11.7428C16.5417 11.9614 16.4501 12.1661 16.3844 12.3795C16.0716 13.2174 15.6205 14.0085 15.0502 14.7094C14.4799 15.4103 13.792 16.0244 13.0109 16.5067C12.228 16.9838 11.3604 17.3307 10.4479 17.525C9.53707 17.7159 8.57961 17.7749 7.63426 17.6465C6.69063 17.5164 5.7591 17.2249 4.89324 16.7739C4.02738 16.3245 3.23066 15.7191 2.55145 14.987C1.86879 14.2566 1.32785 13.3857 0.938989 12.4419C0.553588 11.4947 0.332371 10.4729 0.287436 9.4337C0.237317 8.39279 0.40323 7.33974 0.731598 6.337C1.39525 4.33498 2.80205 2.53941 4.67202 1.47421C6.52817 0.396869 8.79046 0.0117319 10.8799 0.476672C12.9711 0.920793 14.8532 2.17509 16.0301 3.88045L16.2911 3.74686C15.0122 2.30173 13.3047 1.24521 11.4485 0.854869C10.5256 0.648422 9.57336 0.577293 8.64183 0.681384C7.71376 0.780271 6.7926 0.991922 5.94575 1.38053C5.0989 1.76046 4.31428 2.26704 3.6247 2.87597C2.93513 3.48664 2.36134 4.21874 1.8999 5.00463C1.65794 5.39324 1.48339 5.81654 1.30192 6.2329L1.08416 6.88C1.00985 7.09512 0.977011 7.32066 0.919978 7.54098C0.897511 7.65201 0.864674 7.76131 0.84912 7.87234L0.805913 8.2089C0.781718 8.43443 0.735055 8.65649 0.74024 8.88375L0.722957 9.56035L0.773077 10.2352C0.871587 11.1304 1.09453 12.0065 1.45055 12.8288C1.8204 13.6442 2.3095 14.3988 2.8971 15.0633C3.47953 15.7347 4.18293 16.2933 4.94336 16.7392L5.22852 16.9092C5.32531 16.9612 5.42727 17.0046 5.52751 17.0514L5.8265 17.192C5.92501 17.2423 6.02525 17.2856 6.13067 17.3186L6.75285 17.5407L7.39403 17.7003C8.2547 17.8772 9.13957 17.9414 10.0158 17.8599C10.8903 17.7662 11.7475 17.5459 12.5581 17.2024C13.3703 16.8589 14.1118 16.3644 14.7771 15.7867C15.4408 15.2073 16.0232 14.5238 16.4708 13.757C16.6246 13.5106 16.3654 13.377 16.2168 13.6112Z" fill="#BFBFBF"/>
+                      <circle cx="9.00003" cy="9" r="5.14286" fill="#AB1530"/>
+                    </svg>
+                    {{ block.settings.text }}
+                  </p>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if section.settings.second_text != blank %}
+              <div class="second-text h6 font-400">{{ section.settings.second_text }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova Half Text Column",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mob_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "header",
+      "content": "Left settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button text"
+    },
+    {
+      "type": "header",
+      "content": "Second settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image",
+      "label": "Second image"
+    },
+    {
+      "type": "text",
+      "id": "second_heading",
+      "label": "Second heading"
+    },
+    {
+      "type": "color",
+      "id": "second_heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "richtext",
+      "id": "second_text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "second_text_color",
+      "label": "Text color"
+    },
+    {
+      "type": "color",
+      "id": "second_textlist_color",
+      "label": "Text list color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_text",
+      "name": "Block text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova Half Text Column"
+    }
+  ]
+}
+{% endschema %}
