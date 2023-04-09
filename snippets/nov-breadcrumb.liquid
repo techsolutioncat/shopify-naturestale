@@ -1,28 +1,40 @@
 {% if settings.breadcrumbs_enable %}
   <section id="NovBreadcrumbs">
     <div class="container">
-      {% if custom_pagetitle == blank %}
-        <h1 class="headingPage d-flex {{ settings.title_alignment }}">{{ page_title }}</h1>
-      {% else %}
-        <h1 class="headingPage d-flex {{ settings.title_alignment }}">{{ custom_pagetitle }}</h1>
-      {% endif %}
-      <ol class="breadcrumb {{ settings.title_alignment }} list-inline" itemscope itemtype="http://schema.org/BreadcrumbList">
+      {%- comment -%}
+        {% if custom_pagetitle == blank %}
+          <h1 class="headingPage d-flex {{ settings.title_alignment }}">{{ page_title }}</h1>
+        {% else %}
+          <h1 class="headingPage d-flex {{ settings.title_alignment }}">{{ custom_pagetitle }}</h1>
+        {% endif %}
+      <ol
+        class="breadcrumb {{ settings.title_alignment }} list-inline"
+        itemscope
+        itemtype="http://schema.org/BreadcrumbList"
+      >
         <li class="list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
           <a href="/" title="{{ 'general.breadcrumbs.home' | t }}" itemprop="item">
             <span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span>
           </a>
-          <meta itemprop="position" content="1" />
+          <meta itemprop="position" content="1">
         </li>
         {% if template contains 'article' %}
           <li class="list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
             <a href="{{ blog.url }}" title="{{ blog.title }}" itemprop="item">
               <span itemprop="name">{{ blog.title }}</span>
             </a>
-            <meta itemprop="position" content="2" />
+            <meta itemprop="position" content="2">
           </li>
-          <li class="active list-inline-item list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <span itemprop="item"><span itemprop="name">{{ article.title }}</span></span>
-            <meta itemprop="position" content="3" />
+          <li
+            class="active list-inline-item list-inline-item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="http://schema.org/ListItem"
+          >
+            <span itemprop="item"
+              ><span itemprop="name">{{ article.title }}</span></span
+            >
+            <meta itemprop="position" content="3">
           </li>
         {% elsif template contains 'product' %}
           {% if collection %}
@@ -32,18 +44,25 @@
                 <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
                   <span itemprop="name">{{ collection.title }}</span>
                 </a>
-                <meta itemprop="position" content="2" />
+                <meta itemprop="position" content="2">
               </li>
             {% endif %}
           {% endif %}
-          <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <span itemprop="item"><span itemprop="name">{{ product.title }}</span></span>
+          <li
+            class="active list-inline-item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="http://schema.org/ListItem"
+          >
+            <span itemprop="item"
+              ><span itemprop="name">{{ product.title }}</span></span
+            >
             {% if collection %}
               {% if collection.handle %}
-                <meta itemprop="position" content="3" />
+                <meta itemprop="position" content="3">
               {% endif %}
             {% else %}
-              <meta itemprop="position" content="2" />
+              <meta itemprop="position" content="2">
             {% endif %}
           </li>
         {% elsif template contains 'collection' and collection.handle %}
@@ -53,16 +72,30 @@
               <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
                 <span itemprop="name">{{ collection.title }}</span>
               </a>
-              <meta itemprop="position" content="2" />
+              <meta itemprop="position" content="2">
             </li>
-            <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <span itemprop="item"><span itemprop="name">{{ current_tags | join: " + " }}</span></span>
-              <meta itemprop="position" content="3" />
+            <li
+              class="active list-inline-item"
+              itemprop="itemListElement"
+              itemscope
+              itemtype="http://schema.org/ListItem"
+            >
+              <span itemprop="item"
+                ><span itemprop="name">{{ current_tags | join: ' + ' }}</span></span
+              >
+              <meta itemprop="position" content="3">
             </li>
           {% else %}
-            <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <span itemprop="item"><span itemprop="name">{{ collection.title }}</span></span>
-              <meta itemprop="position" content="2" />
+            <li
+              class="active list-inline-item"
+              itemprop="itemListElement"
+              itemscope
+              itemtype="http://schema.org/ListItem"
+            >
+              <span itemprop="item"
+                ><span itemprop="name">{{ collection.title }}</span></span
+              >
+              <meta itemprop="position" content="2">
             </li>
           {% endif %}
         {% elsif template contains 'blog' %}
@@ -72,42 +105,80 @@
               <a href="{{ blog.url }}" title="{{ blog.title }}" itemprop="item">
                 <span itemprop="name">{{ blog.title }}</span>
               </a>
-              <meta itemprop="position" content="2" />
+              <meta itemprop="position" content="2">
             </li>
-            <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <span itemprop="item"><span itemprop="name">{{ current_tags | join: " + " }}</span></span>
-              <meta itemprop="position" content="3" />
+            <li
+              class="active list-inline-item"
+              itemprop="itemListElement"
+              itemscope
+              itemtype="http://schema.org/ListItem"
+            >
+              <span itemprop="item"
+                ><span itemprop="name">{{ current_tags | join: ' + ' }}</span></span
+              >
+              <meta itemprop="position" content="3">
             </li>
           {% else %}
-            <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <span itemprop="item"><span itemprop="name">{{ blog.title }}</span></span>
-              <meta itemprop="position" content="2" />
+            <li
+              class="active list-inline-item"
+              itemprop="itemListElement"
+              itemscope
+              itemtype="http://schema.org/ListItem"
+            >
+              <span itemprop="item"
+                ><span itemprop="name">{{ blog.title }}</span></span
+              >
+              <meta itemprop="position" content="2">
             </li>
           {% endif %}
         {% elsif template contains 'page' %}
-          <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-            <span itemprop="item"><span itemprop="name">{{ page.title }}</span></span>
-            <meta itemprop="position" content="2" />
+          <li
+            class="active list-inline-item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="http://schema.org/ListItem"
+          >
+            <span itemprop="item"
+              ><span itemprop="name">{{ page.title }}</span></span
+            >
+            <meta itemprop="position" content="2">
           </li>
         {% else %}
-          <li class="active list-inline-item list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          <li
+            class="active list-inline-item list-inline-item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="http://schema.org/ListItem"
+          >
             {% if custom_pagetitle != blank %}
-              <span itemprop="item"><span itemprop="name">{{ custom_pagetitle }}</span></span>
+              <span itemprop="item"
+                ><span itemprop="name">{{ custom_pagetitle }}</span></span
+              >
             {% else %}
-              <span itemprop="item"><span itemprop="name">{{ page_title }}</span></span>
+              <span itemprop="item"
+                ><span itemprop="name">{{ page_title }}</span></span
+              >
             {% endif %}
-            <meta itemprop="position" content="2" />
+            <meta itemprop="position" content="2">
           </li>
         {% endif %}
       </ol>
+      {%- endcomment -%}
+      
       {% if template contains 'product' %}
         {% if collection.previous_product or collection.next_product %}
           <div class="moved_product d-flex align-items-center {{ settings.title_alignment }}">
             {% if collection.previous_product %}
-              {{ '<i class="zmdi zmdi-long-arrow-left"></i>' | link_to: collection.previous_product.url, collection.previous_product.title }}
+              {{
+                '<i class="zmdi zmdi-long-arrow-left"></i>'
+                | link_to: collection.previous_product.url, collection.previous_product.title
+              }}
             {% endif %}
             {% if collection.next_product %}
-              {{ '<i class="zmdi zmdi-long-arrow-right"></i>' | link_to: collection.next_product.url, collection.next_product.title }}
+              {{
+                '<i class="zmdi zmdi-long-arrow-right"></i>'
+                | link_to: collection.next_product.url, collection.next_product.title
+              }}
             {% endif %}
           </div>
         {% endif %}
@@ -116,7 +187,8 @@
         {% if blog.previous_article or blog.next_article %}
           <div class="moved_blog d-flex align-items-center {{ settings.title_alignment }}">
             {% if blog.previous_article %}
-              {{ '<i class="zmdi zmdi-long-arrow-left"></i>' | link_to: blog.previous_article }}{% endif %}
+              {{ '<i class="zmdi zmdi-long-arrow-left"></i>' | link_to: blog.previous_article -}}
+            {%- endif %}
             {% if blog.next_article %}
               {{ '<i class="zmdi zmdi-long-arrow-right"></i>' | link_to: blog.next_article }}
             {% endif %}
@@ -136,7 +208,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    background: rgba(0, 0, 0, {{ settings.image_overlay_opacity }}%);
+    background-image: url('{{ 'breadcrumb.png' | asset_url }}');
   }
   {% endif %}
   #NovBreadcrumbs {

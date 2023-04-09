@@ -225,3 +225,15 @@ nav#AccessibleNav .site-nav {
     width: 100%;
   }
 }
+
+/* Breadcrumb */
+#NovBreadcrumbs {
+  padding-bottom: 180px !important;
+  margin-bottom: 0px !important;
+}
+
+#NovBreadcrumbs::before {
+  background-image: url(//cdn.shopify.com/s/files/1/0704/4805/4566/t/2/assets/breadcrumb.png?v=4284798…);
+  background-size: cover;
+  background-position: center;
+}
