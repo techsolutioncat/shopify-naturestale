@@ -1,52 +1,55 @@
-{%- style -%}
-  #shopify-section-nov-footer .title_block .title {
-    color: {{ section.settings.contact_title_color }};
-  }
-  #shopify-section-nov-footer .title_block .sub_title {
-    color: {{ section.settings.contact_subtitle_color }};
-  }
-{%- endstyle -%}
-
 <footer>
-  <div class="contact-from-wrap container">
-    {% if section.settings.title_contact != blank %}
-      <div class="title_block text-center">
-        <p class="font-700 h2 title">{{ section.settings.title_contact }}</p>
-        {% if section.settings.sub_title_contact != blank %}
-        <div class="sub_title font-600 h5">
-          {{ section.settings.sub_title_contact }}
-        </div>
-        {% endif %}
-      </div>
-    {% endif %}
-    {% if section.settings.contactform %}
+  {% if section.settings.contactform %}
+    <div class="footer-contactform">
       <div class="container">
-        <div class="footer-contactform">
-          <div class="container">
+        <div class="row justify-content-end">
+          <div class="contact-form form-vertical col-xl-6 col-lg-8 col-md-10">
+            {% if section.settings.title_contact != blank %}
+              <div class="title_block">
+                {{ section.settings.title_contact }}
+                {% if section.settings.sub_title_contact != blank %}
+                <div class="sub_title">
+                  {{ section.settings.sub_title_contact }}
+                </div>
+                {% endif %}
+              </div>
+            {% endif %}
             {% form 'contact' %}
+              {% if form.posted_successfully? %}
+                <p class="note form-success">
+                  {{ 'contact.form.post_success' | t }}
+                </p>
+              {% endif %}
               {{ form.errors | default_errors }}
-          
-              <div class="first-name">
-                <input type="text" name="contact[first_name]" id="first-name" placeholder="Your name*">
+              <div class="form-group row spacing-10">
+                <div class="col-md-6 mb-xs-10">
+                  <input type="text" id="ContactFormName" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="YOUR NAME">
+                </div>
+                <div class="col-md-6">
+                  <input type="email" id="ContactFormEmail" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="{% if form.errors contains 'email' %}input--error{% endif %}" placeholder="YOUR EMAIL">
+                </div>
               </div>
-          
-              <div class="last-name">
-                <input type="text" name="contact[last_name]" id="last-name" placeholder="Your Last name*">
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <input class="mb-0" type="text" id="ContactFormSubject" name="contact[subject]" value="{% if form[subject] %}{{ form[subject] }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="SUBJECT">
+                </div>
               </div>
-          
-              <div class="email">
-                <input type="email" name="contact[email]" id="email" placeholder="Email*">
+
+              <div class="form-group row mb-20">
+                <div class="col-md-12">
+                  <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="MESSAGE">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                </div>
               </div>
-          
-              <div class="submit">
-                <button type="submit" class="font-700 text-uppercase font-700 site-button button_S btn-submit">{{ 'contact.form.submit' | t }}</button>
-              </div>
+
+              
+              <button type="submit" class="btn"><i class="icon-buttonform mr-15"></i>{{ 'contact.form.submit' | t }}</button>
             {% endform %}
           </div>
         </div>
       </div>
-    {% endif %}
-  </div>
+    </div>
+  {% endif %}
   <div class="footer-layout pt-80 pb-30">
     <div class="container">
       {% if section.settings.newsletter == true %}
@@ -87,7 +90,7 @@
               <div class="footer_contact block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
                 <div class="block">
                   {% if block.settings.block_title != blank %}
-                  <div class="title-block h5">
+                  <div class="title-block">
                     {{ block.settings.block_title }}
                     <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
                   </div>
@@ -135,7 +138,7 @@
               {%- assign footer_linklist = block.settings.menu_handle -%}
               <div class="footer_menu block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
                 {% if block.settings.block_title != blank %}
-                <div class="title-block h5">
+                <div class="title-block">
                   {{ block.settings.block_title }}
                   <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
                 </div>
@@ -145,7 +148,7 @@
                     <ul class="site-footer__linklist list-unstyled">
                       {% for link in linklists[footer_linklist].links %}
                         <li class="site-footer__linklist-item">
-                          <a class="font-400 h6" href="{{ link.url }}">{{ link.title }}</a>
+                          <a class="font-500" href="{{ link.url }}">{{ link.title }}</a>
                         </li>
                       {% endfor %}
                     </ul>
@@ -158,7 +161,7 @@
               <div class="footer_html block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
                 <div class="block">
                   {% if block.settings.block_title != blank %}
-                  <div class="title-block h5">
+                  <div class="title-block">
                     {{ block.settings.block_title }}
                     <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
                   </div>
@@ -183,7 +186,7 @@
             {% if block.type == 'block_newsletter' %}
               <div class="footer_newsletter block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
                 {% if block.settings.block_title != blank %}
-                <div class="title-block h5">
+                <div class="title-block">
                   {{ block.settings.block_title }}
                   <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
                 </div>
@@ -229,7 +232,7 @@
               <div class="footer_image block_footer{% if block.settings.block_title != blank %} mt-xs-0 mb-xs-0{% endif %} {{ block.settings.grid_xl }} {{ block.settings.grid_lg }} {{ block.settings.grid_md }} {{ block.settings.grid_sm }}{% if block.settings.block_class != blank %} {{ block.settings.block_class }}{% endif %}">
                 <div class="block">
                   {% if block.settings.block_title != blank %}
-                  <div class="title-block h5">
+                  <div class="title-block">
                     {{ block.settings.block_title }}
                     <span class="f_btn_sl d-sm-none"><i class="zmdi zmdi-plus"></i></span>
                   </div>
@@ -240,16 +243,6 @@
                     {% endif %}
                     {% if block.settings.img2 != blank %}
                       <img class="img-fluid lazyload mt-45" data-src="{{ block.settings.img2 | img_url: '300x' }}">
-                    {% endif %}
-                  </div>
-                  <div class="link-wrap">
-                    {% if block.settings.button_text != blank %}
-                      <a
-                        class="font-700 text-uppercase font-700 hero-button site-button button_S"
-                        href="{{ block.settings.button_link }}"
-                      >
-                        {{- block.settings.button_text -}}
-                      </a>
                     {% endif %}
                   </div>
                 </div>
@@ -271,9 +264,9 @@
         <div class="notice mb-35">{{ section.settings.notice }}</div>
       {% endif %}
       {% if section.settings.payment_icons != blank %}
-        <div class="payment mb-25"><img class="lazyload" data-src="{{ section.settings.payment_icons | img_url: '800x' }}" alt="img"></div>
+        <div class="payment mb-25"><img class="lazyload" data-src="{{ section.settings.payment_icons | img_url: '300x' }}" alt="img"></div>
       {% endif %}
-      <div class="copyright font-300">{{ section.settings.copyright }}</div>
+      <div class="copyright">{{ section.settings.copyright }}</div>
     </div>
   </div>
 </footer>
@@ -314,11 +307,6 @@
         "label": "Background image"
       },
       {
-        "type": "image_picker",
-        "id": "bg_copy_image",
-        "label": "Background copyright image"
-      },
-      {
         "type": "header",
         "content": "Contact Form"
       },
@@ -338,18 +326,6 @@
         "id": "sub_title_contact",
         "label": "Sub title contact form",
         "default": "We’re always happy to reply our customers."
-      },
-      {
-        "type": "color",
-        "id": "contact_title_color",
-        "label": "Title color",
-        "default": "#fff"
-      },
-      {
-        "type": "color",
-        "id": "contact_subtitle_color",
-        "label": "Subitle color",
-        "default": "#fff"
       },
       {
         "type": "image_picker",
@@ -411,7 +387,7 @@
         "label": "Upload payment icons"
       },
       {
-        "type": "richtext",
+        "type": "text",
         "id": "copyright",
         "label": "Copyright text"
       }
@@ -907,17 +883,6 @@
             "label": "Image 2"
           },
           {
-            "type": "url",
-            "id": "button_link",
-            "label": "Button text"
-          },
-          {
-            "type": "text",
-            "id": "button_text",
-            "label": "Button text",
-            "default": "Button"
-          },
-          {
             "type": "text",
             "id": "block_class",
             "label": "Class"
@@ -1041,8 +1006,7 @@
   }
   {% if section.settings.bg_copy != blank %}
     .footer_copyright {
-      {% comment %} background-color: {{ section.settings.bg_copy }}; {% endcomment %}
-      background-image: url("{{ section.settings.bg_copy_image | img_url: '1920x' }}"); background-repeat: no-repeat; background-size: cover;background-position: center;
+      background-color: {{ section.settings.bg_copy }};
     }
   {% endif %}
   {% if section.settings.bg_contact_form != blank %}
