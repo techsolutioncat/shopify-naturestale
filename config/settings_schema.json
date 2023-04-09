@@ -173,6 +173,18 @@
         "content": "Social sharing options"
       },
       {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "Linkedin",
+        "info": "http:\/\/linkedin.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_telegram_link",
+        "label": "Telegram",
+        "info": "http:\/\/telegram.org\/shopify"
+      },
+      {
         "type": "checkbox",
         "id": "share_facebook",
         "label": "Share on Facebook",
@@ -229,12 +241,6 @@
         "id": "social_google_link",
         "label": "Google",
         "info": "http:\/\/google.com\/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_linkedin_link",
-        "label": "Linkedin",
-        "info": "http:\/\/linkedin.com\/shopify"
       },
       {
         "type": "text",

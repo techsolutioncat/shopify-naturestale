@@ -94,3 +94,134 @@ nav#AccessibleNav .site-nav {
   box-shadow: unset;
   width: 100%;
 }
+
+/* Footer style css */
+#shopify-section-nov-footer footer .footer-layout {
+  background-size: cover;
+}
+
+.nov-footer .block_social a {
+  background-color: transparent !important;
+}
+
+#shopify-section-nov-footer .copyright {
+  font-size: 14px;
+  color: #fff;
+}
+
+#shopify-section-nov-footer .copyright a {
+  color: #EA7503;
+}
+
+#shopify-section-nov-footer .link-wrap {
+  margin-top: 24px;
+  margin-left: -22px;
+}
+
+/* Contact form */
+#shopify-section-nov-footer .footer-contactform {
+  position: relative;
+  max-width: 975px;
+  height: 200px;
+  margin: 0 auto;
+  border-radius: 40px;
+}
+
+#shopify-section-nov-footer .footer-contactform::before {
+  position: absolute;
+  content: "";
+  width: calc(100% + 34px);
+  height: calc(100% + 34px);
+  bottom: -17px;
+  right: -17px;
+  border-radius: 57px;
+  border: solid 17px #ffffffb3;
+}
+
+#shopify-section-nov-footer {
+  margin-top: 60px;
+}
+
+#shopify-section-nov-footer #contact_form {
+  display: flex;
+  justify-content: space-between;
+}
+
+#shopify-section-nov-footer .contact-from-wrap {
+  margin-bottom: -230px;
+}
+
+#shopify-section-nov-footer .footer-layout .container {
+  margin-top: 190px;
+}
+
+#shopify-section-nov-footer .footer-contactform input {
+  width: 250px;
+  height: 50px;
+  /* white */
+  background: #FFFFFF;
+  /* gray50 */
+  border: 1px solid #BFBFBF;
+  border-radius: 20px;
+}
+
+#shopify-section-nov-footer .footer-contactform input::placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5E5E5E;
+}
+
+#shopify-section-nov-footer button.btn-submit {
+  border: none;
+  cursor: pointer;
+}
+
+#shopify-section-nov-footer .contact-from-wrap .container {
+  position: relative;
+}
+
+#shopify-section-nov-footer .title_block .sub_title {
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+  #shopify-section-nov-footer .footer_image {
+    display: flex;
+    justify-content: center;
+  }
+
+  #shopify-section-nov-footer .link-wrap {
+    margin-top: 24px;
+    margin-left: -9px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 991px) {
+  #shopify-section-nov-footer .footer-contactform {
+    height: 300px;
+  }
+
+  #shopify-section-nov-footer .footer-contactform .container {
+    position: absolute;
+    top: 38px;
+  }
+
+  #shopify-section-nov-footer #contact_form {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 13px;
+    text-align: center;
+  }
+
+  #shopify-section-nov-footer .footer-contactform input {
+    width: 100%;
+  }
+
+  #shopify-section-nov-footer button.btn-submit {
+    width: 100%;
+  }
+}
