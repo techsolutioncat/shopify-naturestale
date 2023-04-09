@@ -11,11 +11,11 @@
   #shopify-section-{{ section.id }} .section-content {
     position: relative;
   }
-  #shopify-section-{{ section.id }} .background-image,
-  #shopify-section-{{ section.id }} .background-image img
+  #shopify-section-{{ section.id }} .background-video,
+  #shopify-section-{{ section.id }} .background-video video
   {
     width: 100%;
-    height: 100%;
+    height: 100% !important;
     object-fit: cover;
     position: absolute;
     z-index: -1;
@@ -50,6 +50,9 @@
   #shopify-section-{{ section.id }} .nav-text {
     color: {{ section.settings.nav-text_color }};
     margin-top: 12px;
+  }
+  #shopify-section-{{ section.id }} .section-content {
+    margin-bottom: 60px;
   }
   @media(max-width: 999px) {
     #shopify-section-{{ section.id }} .section-content.h_L {
@@ -87,9 +90,11 @@
 {% endstyle %}
 
 <div class="section-content {{ section.settings.background_height }}">
-  {% if section.settings.background_image != blank %}
-    <div class="background-image">
-      <img src="{{ section.settings.background_image | image_url: width: 2000 }}">
+  {% if section.settings.video_url != blank %}
+    <div class="background-video">
+      <video playsinline autoplay loop muted style="width: 100%;max-width: 100%; height: auto;">
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      </video>
     </div>
   {% endif %}
   <div class="page-width container">
@@ -127,9 +132,10 @@
       "content": "Background settings"
     },
     {
-      "type": "image_picker",
-      "id": "background_image",
-      "label": "Background image"
+      "type": "url",
+      "id": "video_url",
+      "label": "Video link",
+      "info": "Upload video in Admin > Settings > Files"
     },
     {
       "type": "select",
