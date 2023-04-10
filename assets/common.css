@@ -88,6 +88,14 @@
   color: #BFBFBF;
 }
 
+.lh-24 {
+  line-height: 24px;
+}
+
+.lh-21 {
+  line-height: 21px;
+}
+
 /* Button style */
 .site-button {
   position: relative;

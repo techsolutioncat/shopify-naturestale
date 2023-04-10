@@ -1,3 +1,44 @@
+{%- style -%}
+  .template-product .tab-icons {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .template-product .tab-icons .icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .template-product .tab-icons .icon label {
+    color: #3F4D6A;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    margin-top: 10px;
+  }
+  .template-product .cover-image {
+    position: absolute;
+    width: 100%;
+  }
+  .template-product .cover-image img {
+    object-fit: cover;
+    width: 100%;
+  }
+  .template-product .tab-head-container {
+    position: relative;
+  }
+  @media(max-width: 600px) {
+    .template-product .tab-icons {
+      gap: 15px;
+    }
+  }
+{%- endstyle -%}
+
 <div class="TopContent">
   <div class="container">
     <div class="product-single row position-static">
@@ -131,7 +172,7 @@
               
               {% if section.settings.show_des %}
                 <div class="product-single__shortdes h6 font-400 truncatewords" itemprop="description">
-                  {{ product.description | strip_html | truncatewords: 30}}
+                  {{ product.description | strip_html | truncatewords: 130}}
                   <div class="btn_truncatewords btn_show_more">
                     <a href="Javascript:;" class="font-400 h6">show more <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M11 1.5L6 6.5L1 1.5" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -449,32 +490,60 @@
     </div>
   </div>
   <div class="single__tab" {% if section.settings.background_color != blank %}style="background-color: {{ section.settings.background_color }};"{% endif %}>
-    <div class="container">
+    {%- if section.settings.tab_bg_image != blank -%}
+      <div class="cover-image">
+        <img src="{{ section.settings.tab_bg_image | image_url: width: 2000 }}">
+      </div>
+    {%- endif -%}
+    
+    <div class="container tab-head-container">
+      {% for block in section.blocks %}
+        {% if block.type == 'tab_title' and  block.settings.heading != blank %}
+          <div class="heading">
+            <p class="h3 font-600 text-center" style="color: {{ block.settings.color }};">{{ block.settings.heading }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="tab-icons">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab_icon' and  block.settings.icon != blank %}
+            <div class="icon">
+              <img src="{{ block.settings.icon | image_url: width: 75 }}">
+              <label>{{ block.settings.label }}</label>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <div class="container tab-container">
       <div class="product-single__tabs wow fadeInUp animated">
         <div class="block_nav">
           <ul class="nav nav-tabs">
             {% if section.settings.show_description %}
-              <li><a class="active" href="#proTabs1" data-toggle="tab">{{ 'products.product.tabdes' | t }}</a></li>
+              <li><a class="active font-600 h5 lh-21" href="#proTabs1" data-toggle="tab">{{ 'products.product.tabdes' | t }}</a></li>
             {% endif %}
             {% for block in section.blocks %}
               {% if block.type == 'block_text' %}
-                <li><a href="#tabCustom-{{ forloop.index }}" data-toggle="tab">{{ block.settings.custom_title }}</a></li>
+                <li><a class="font-600 h5 lh-21" href="#tabCustom-{{ forloop.index }}" data-toggle="tab">{{ block.settings.custom_title }}</a></li>
               {% endif %}
               {% if block.type == 'block_img' %}
-                <li><a href="#tabCustom-{{ forloop.index }}" data-toggle="tab">{{ block.settings.custom_title }}</a></li>
+                <li><a class="font-600 h5 lh-21" href="#tabCustom-{{ forloop.index }}" data-toggle="tab">{{ block.settings.custom_title }}</a></li>
               {% endif %}
               {% if block.type == 'block_video' %}
-                <li><a href="#tabCustom-{{ forloop.index }}" data-toggle="tab">{{ block.settings.custom_title }}</a></li>
+                <li><a class="font-600 h5 lh-21" href="#tabCustom-{{ forloop.index }}" data-toggle="tab">{{ block.settings.custom_title }}</a></li>
               {% endif %}
             {% endfor %}
             {% if section.settings.show_review or settings.show_rating %}
-              <li><a href="#tabreview" data-toggle="tab">{{ 'products.product.lable_review' | t }}</a></li>
+              <li><a class="font-600 h5 lh-21" href="#tabreview" data-toggle="tab">{{ 'products.product.lable_review' | t }}</a></li>
             {% endif %}
           </ul>
         </div>
         <div class="tab-content">
           {% if section.settings.show_description %}
-          <div class="tab-pane active" id="proTabs1">{{ product.description }}</div>
+          <div class="tab-pane active h6 font-400 lh-24" id="proTabs1">{{ product.description }}</div>
           {% endif %}
           {% if section.settings.show_review or settings.show_rating %}
             <div class="tab-pane" id="tabreview">
