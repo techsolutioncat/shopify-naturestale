@@ -1,0 +1,248 @@
+{%- style -%}
+  #shopify-section-nov-main-contact .contact-form .contact-info-group {
+    padding-right: 160px;
+  }
+  #shopify-section-nov-main-contact .contact-form .formContactUs {
+    margin-top: 0px;
+  }
+  #shopify-section-nov-main-contact .contact-form input {
+    max-width: 400px;
+    height: 49px;
+  }
+  #shopify-section-nov-main-contact .contact-form textarea {
+    height: auto;
+    padding-top: 12px;
+  }
+  #shopify-section-nov-main-contact .contact-form input,
+  #shopify-section-nov-main-contact .contact-form textarea {
+    background: #ffffff;
+    border: 1px solid #bfbfbf;
+    border-radius: 20px;
+    padding-left: 23px;
+  }
+  #shopify-section-nov-main-contact .contact-form .contact_title {
+    color: {{ section.settings.title_color }};
+  }
+  #shopify-section-nov-main-contact .contact-form .contact_text {
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-nov-main-contact .contact-form .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+    margin-top: 15px;
+  }
+  #shopify-section-nov-main-contact .contact-form .contact-info .block {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  #shopify-section-nov-main-contact .contact-form .contact-info .info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  @media (max-width: 1200px) {
+    #shopify-section-nov-main-contact .contact-form .contact-info-group {
+      padding-right: 0px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-nov-main-contact .contact-form .formContactUs {
+      margin-top: 30px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-content">
+  <div class="container">
+    <div class="contact-form row">
+      <div class="col-md-7 contact-info-group">
+        {% if section.settings.title_contact_message != blank %}
+          <div class="contact_title">
+            <span class="font-600 h3 lh-4">{{ section.settings.title_contact_message }}</span>
+          </div>
+        {% endif %}
+        {% if section.settings.text_contact_message != blank %}
+          <div class="contact_text">
+            <span class="font-400 h6 lh-24">{{ section.settings.text_contact_message }}</span>
+          </div>
+        {% endif %}
+        {% if section.blocks.size > 0 %}
+          <div class="contact-info">
+            {% for block in section.blocks %}
+              <div class="block">
+                {%- if block.settings.image != blank -%}
+                <div class="info-image">
+                  <img src="{{ block.settings.image | image_url: width: 65 }}">
+                </div>
+                {%- endif -%}
+                <div class="info-text">
+                  {%- if block.settings.title != blank -%}
+                    <div class="h4 font-600 lh-21 m-0" style="color: {{ block.settings.title_color }};">{{ block.settings.title }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <div class="h6 lh-24 font-400 m-0" style="color: {{ block.settings.text_color }};">{{ block.settings.text }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-5">
+        <div class="formContactUs wow animate__fadeInUp animate__animated">
+          <div class="contact-form">
+            {% form 'contact' %}
+              {% if form.posted_successfully? %}
+                <p class="note form-success">
+                  {{ 'contact.form.post_success' | t }}
+                </p>
+              {% endif %}
+
+              {{ form.errors | default_errors }}
+
+              <div class="form-group row mb-15 mb-xs-20">
+                <div class="col-md-12 mb-xs-20">
+                  <input
+                    type="text"
+                    id="ContactFormName"
+                    name="contact[name]"
+                    value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                    class="{% if form.errors contains 'name' %}input--error{% endif %}"
+                    placeholder="Your name*"
+                    required
+                  >
+                </div>
+              </div>
+              <div class="form-group row mb-15 mb-xs-20">
+                <div class="col-md-12">
+                  <input
+                    type="email"
+                    id="ContactFormEmail"
+                    name="contact[email]"
+                    value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                    class="{% if form.errors contains 'email' %}input--error{% endif %}"
+                    placeholder="Your email*"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="form-group row mb-15 mb-xs-20">
+                <div class="col-md-12">
+                  <input
+                    type="tel"
+                    id="ContactFormPhone"
+                    name="contact[phone]"
+                    pattern="[0-9\-]*"
+                    value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                    class="{% if form.errors contains 'phone' %}input--error{% endif %}"
+                    placeholder="{{ 'contact.form.phone' | t }}"
+                  >
+                </div>
+              </div>
+
+              <div class="form-group row mb-15">
+                <div class="col-md-12">
+                  <textarea
+                    rows="12"
+                    cols="50"
+                    class="mt-0"
+                    id="ContactFormMessage"
+                    name="contact[body]"
+                    placeholder="Message*"
+                    required
+                  >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                </div>
+              </div>
+
+              <button class="btn btn_message site-button button_S h6 mt-3" type="submit">
+                {{ section.settings.submit_button_text }}
+              </button>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova contact us",
+  "class": "index-section page-contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_contact_message",
+      "label": "Title contact message",
+      "default": "Get in touch"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color"
+    },
+    {
+      "type": "textarea",
+      "id": "text_contact_message",
+      "label": "Text contact message",
+      "default": "Get in touch"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text",
+      "label": "Button text",
+      "default": "SEND MESSAGE"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact_info",
+      "name": "Contact info",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova contact us"
+    }
+  ]
+}
+{% endschema %}
