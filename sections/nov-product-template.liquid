@@ -87,6 +87,12 @@ itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id 
       },
       {
         "type": "checkbox",
+        "id": "show_product_price",
+        "label": "Show price",
+        "default": true
+      },
+      {
+        "type": "checkbox",
         "id": "product_swatch_enable",
         "label": "Enable swatch",
         "default": true
@@ -132,6 +138,11 @@ itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id 
         "id": "show_des",
         "label": "Show summary description",
         "default": true
+      },
+      {
+        "type": "text",
+        "id": "des_title",
+        "label": "Description title"
       },
       {
         "type": "checkbox",
