@@ -76,6 +76,18 @@
   }
 }
 
+.font-white {
+  color: #fff;
+}
+
+.font-black {
+  color: #000;
+}
+
+.font-gray {
+  color: #BFBFBF;
+}
+
 /* Button style */
 .site-button {
   position: relative;

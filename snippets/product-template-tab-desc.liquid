@@ -1,7 +1,7 @@
 <div class="TopContent">
   <div class="container">
     <div class="product-single row position-static">
-      <div class="col-lg-6 col-12 position-static">
+      <div class="col-lg-4 col-12 position-static">
         <div class="product-single__photos pro_sticky">
           <div class="proFeaturedImage FeaturedImage_slick">
             {%- for media in product.media -%}
@@ -63,13 +63,14 @@
         </div>
       </div>
 
-      <div class="block_information position-static col-lg-6 col-12 mt-xs-30">
+      <div class="block_information position-static col-lg-8 col-12 mt-xs-30">
         <div class="info_content">
-          <h1 itemprop="name" class="product-single__title">{{ product.title }}</h1>
+          <h1 itemprop="name" class="product-single__title font-700 h2">{{ product.title }}</h1>
           <div class="product-single__meta">
             <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
               <meta itemprop="priceCurrency" content="{{ shop.currency }}">
               <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+              {%- if section.settings.show_product_price -%}
               <div class="gr_pr_rw d-flex align-items-center mb-30">
                 <p class="product-single__price product-single__price-{{ section.id }}{% unless current_variant.available %} product-price--sold-out{% endunless %} d-flex align-items-center">
                   {% if current_variant.compare_at_price > current_variant.price %}
@@ -92,6 +93,7 @@
                     <s id="ComparePrice-{{ section.id }}">{{ current_variant.compare_at_price | money }}</s>
                   {% endif %}
                 </p>
+
                 {% if settings.show_rating %}
                   <div class="group-reviews has-border d-flex align-items-center">
                     <div class="detail-reviews">
@@ -100,9 +102,51 @@
                   </div>
                 {% endif %}
               </div>
+              {%- endif -%}
+              
+              {% if settings.show_rating %}
+                <div class="custom-product-rating group-reviews has-border d-flex align-items-center">
+                  <div class="detail-reviews">
+                    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                    <svg width="144" height="23" viewBox="0 0 144 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M43.3496 1.82745L45.5831 6.28948C45.802 6.72752 46.2246 7.03127 46.7145 7.10156L51.711 7.82075C52.9454 7.99898 53.4367 9.49511 52.5433 10.3524L48.9302 13.8241C48.5752 14.1655 48.4135 14.6563 48.4975 15.1382L49.3502 20.0396C49.5602 21.252 48.2697 22.1771 47.1663 21.6035L42.7006 19.2877C42.2628 19.0605 41.7385 19.0605 41.2994 19.2877L36.8337 21.6035C35.7303 22.1771 34.4398 21.252 34.6511 20.0396L35.5025 15.1382C35.5865 14.6563 35.4248 14.1655 35.0698 13.8241L31.4567 10.3524C30.5633 9.49511 31.0546 7.99898 32.289 7.82075L37.2855 7.10156C37.7754 7.03127 38.1992 6.72752 38.4181 6.28948L40.6504 1.82745C41.2027 0.724183 42.7973 0.724183 43.3496 1.82745Z" fill="#EA7503" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M73.3496 1.82745L75.5831 6.28948C75.802 6.72752 76.2246 7.03127 76.7145 7.10156L81.711 7.82075C82.9454 7.99898 83.4367 9.49511 82.5433 10.3524L78.9302 13.8241C78.5752 14.1655 78.4135 14.6563 78.4975 15.1382L79.3502 20.0396C79.5602 21.252 78.2697 22.1771 77.1663 21.6035L72.7006 19.2877C72.2628 19.0605 71.7385 19.0605 71.2994 19.2877L66.8337 21.6035C65.7303 22.1771 64.4398 21.252 64.6511 20.0396L65.5025 15.1382C65.5865 14.6563 65.4248 14.1655 65.0698 13.8241L61.4567 10.3524C60.5633 9.49511 61.0546 7.99898 62.289 7.82075L67.2855 7.10156C67.7754 7.03127 68.1992 6.72752 68.4181 6.28948L70.6504 1.82745C71.2027 0.724183 72.7973 0.724183 73.3496 1.82745Z" fill="#EA7503" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3496 1.82745L15.5831 6.28948C15.802 6.72752 16.2246 7.03127 16.7145 7.10156L21.711 7.82075C22.9454 7.99898 23.4367 9.49511 22.5433 10.3524L18.9302 13.8241C18.5752 14.1655 18.4135 14.6563 18.4975 15.1382L19.3502 20.0396C19.5602 21.252 18.2697 22.1771 17.1663 21.6035L12.7006 19.2877C12.2628 19.0605 11.7385 19.0605 11.2994 19.2877L6.83367 21.6035C5.73028 22.1771 4.43981 21.252 4.65107 20.0396L5.50248 15.1382C5.58647 14.6563 5.42485 14.1655 5.06978 13.8241L1.45672 10.3524C0.563319 9.49511 1.05456 7.99898 2.28903 7.82075L7.28546 7.10156C7.77543 7.03127 8.19923 6.72752 8.41812 6.28948L10.6504 1.82745C11.2027 0.724183 12.7973 0.724183 13.3496 1.82745Z" fill="#EA7503" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M133.35 1.82745L135.583 6.28948C135.802 6.72752 136.225 7.03127 136.715 7.10156L141.711 7.82075C142.945 7.99898 143.437 9.49511 142.543 10.3524L138.93 13.8241C138.575 14.1655 138.414 14.6563 138.498 15.1382L139.35 20.0396C139.56 21.252 138.27 22.1771 137.166 21.6035L132.701 19.2877C132.263 19.0605 131.738 19.0605 131.299 19.2877L126.834 21.6035C125.73 22.1771 124.44 21.252 124.651 20.0396L125.502 15.1382C125.586 14.6563 125.425 14.1655 125.07 13.8241L121.457 10.3524C120.563 9.49511 121.055 7.99898 122.289 7.82075L127.285 7.10156C127.775 7.03127 128.199 6.72752 128.418 6.28948L130.65 1.82745C131.203 0.724183 132.797 0.724183 133.35 1.82745Z" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M103.35 1.82745L105.583 6.28948C105.802 6.72752 106.225 7.03127 106.715 7.10156L111.711 7.82075C112.945 7.99898 113.437 9.49511 112.543 10.3524L108.93 13.8241C108.575 14.1655 108.414 14.6563 108.498 15.1382L109.35 20.0396C109.56 21.252 108.27 22.1771 107.166 21.6035L102.701 19.2877C102.263 19.0605 101.738 19.0605 101.299 19.2877L96.8337 21.6035C95.7303 22.1771 94.4398 21.252 94.6511 20.0396L95.5025 15.1382C95.5865 14.6563 95.4248 14.1655 95.0698 13.8241L91.4567 10.3524C90.5633 9.49511 91.0546 7.99898 92.289 7.82075L97.2855 7.10156C97.7754 7.03127 98.1992 6.72752 98.4181 6.28948L100.65 1.82745C101.203 0.724183 102.797 0.724183 103.35 1.82745Z" fill="#EA7503" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="available">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19082 1.44565C9.56758 -0.481884 12.4323 -0.481884 13.8092 1.44565L14.0284 1.75252C14.2707 2.09176 14.6776 2.2734 15.0918 2.22737L16.0688 2.11881C18.2676 1.87451 20.1255 3.73239 19.8812 5.93116L19.7727 6.90816C19.7267 7.32248 19.9082 7.72931 20.2475 7.97163L20.5544 8.19082C22.4819 9.56758 22.4819 12.4323 20.5544 13.8092L20.2475 14.0284C19.9082 14.2707 19.7267 14.6776 19.7727 15.0918L19.8812 16.0688C20.1255 18.2676 18.2676 20.1255 16.0688 19.8812L15.0918 19.7727C14.6776 19.7267 14.2707 19.9082 14.0284 20.2475L13.8092 20.5544C12.4323 22.4819 9.56769 22.4819 8.19082 20.5544L7.97163 20.2475C7.72931 19.9082 7.32248 19.7267 6.90815 19.7727L5.93116 19.8812C3.73239 20.1255 1.87451 18.2676 2.11881 16.0688L2.22737 15.0918C2.2734 14.6776 2.09176 14.2707 1.75252 14.0284L1.44565 13.8092C-0.481884 12.4323 -0.481884 9.56769 1.44565 8.19082L1.75252 7.97163C2.09176 7.72931 2.2734 7.32248 2.22737 6.90815L2.11881 5.93116C1.87451 3.73239 3.73239 1.87451 5.93116 2.11881L6.90816 2.22737C7.32248 2.2734 7.72931 2.09176 7.97163 1.75252L8.19082 1.44565ZM15.2659 7.88484C15.7153 8.33424 15.7153 9.06286 15.2659 9.51223L10.8714 13.9068C10.3069 14.4713 9.39163 14.4713 8.82719 13.9068L6.7341 11.8137C6.28471 11.3643 6.28471 10.6357 6.7341 10.1863C7.1835 9.73696 7.9121 9.73696 8.3615 10.1863L9.84928 11.6741L13.6385 7.88484C14.0879 7.43545 14.8166 7.43545 15.2659 7.88484Z" fill="#456635"/>
+                    </svg>
+                    <p class="font-400 h6">Available for order</p>                      
+                  </div>
+                </div>
+              {% endif %}
+              
+              {% if section.settings.des_title != blank %}
+              <p class="des-title h4 font-700">{{ section.settings.des_title }}</p>
+              {% endif %}
+              
               {% if section.settings.show_des %}
-                <div class="product-single__shortdes" itemprop="description">
+                <div class="product-single__shortdes h6 font-400 truncatewords" itemprop="description">
                   {{ product.description | strip_html | truncatewords: 30}}
+                  <div class="btn_truncatewords btn_show_more">
+                    <a href="Javascript:;" class="font-400 h6">show more <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11 1.5L6 6.5L1 1.5" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="product-single__shortdes h6 font-400 view-all" itemprop="description">
+                  {{ product.description | strip_html }}
+                  <div class="btn_view-all btn_show_more">
+                    <a href="Javascript:;" class="font-400 h6">show more <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11 1.5L6 6.5L1 1.5" stroke="#EA7503" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               {% endif %}
               {% if section.settings.show_available %}
@@ -174,6 +218,15 @@
               </div>
             </div>
           </div>
+
+          <form class="subscribe-wrap">
+            <div class="subscribe saveoff">
+              <input type="radio" name="default" id="subscribe" data-price="{{ product.price | times: 0.9 | money}}" checked><label for="subscribe" class="radio-label h5 font-600">Subscribe & Save 10% Off</label>
+            </div>
+            <div class="subscribe onetime">
+              <input type="radio" name="default" id="onetime" data-price="{{ product.price | money }}"><label for="onetime" class="radio-label h5 font-600">One Time Purchase</label>
+            </div>
+          </form>
           <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form-{{ section.id }}" class="product-form product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}" data-section="{{ section.id }}"> 
             <input id="variant_id" type="hidden" name="id" value="{{current_variant.id}}" />
             <div class="items_var">
@@ -252,16 +305,35 @@
               </div>
             {% endif %}
 
-            <div class="group-quantity"> 
+            <div class="group-quantity row">
+              <div class="price-group col-md-5 pl-0">
+                <div class="save-off">
+                  <p class="h4 font-700 font-white">SAVE <br>10% off</p>
+                </div>
+                <div class="subscribe-price">
+                  <p class="h4 font-700 font-white real-price font-gray">{{ product.price | money }}</p>
+                  <p class="h3 font-600 font-white discount-price font-black">{{ product.price | times: 0.9 | money}}</p>
+                </div>
+              </div>
+
             	{% if section.settings.show_quantity_selector == true %}
-                <span class="control-label">{{ 'products.product.quantity' | t }}</span>
+                {% comment %} <span class="control-label">{{ 'products.product.quantity' | t }}</span> {% endcomment %}
               {% endif %}
-              <div class="product-form__item product-form__item--quantity align-items-center mb-10">
+              <div class="product-form__item product-form__item--quantity align-items-center col-md-7 mb-10">
                 {% if section.settings.show_quantity_selector == true %}
                   <div class="quick_view_qty mr-10">
-                    <a href="javascript:void(0);" class="quick_view-qty quick_view-qty-minus">-</a>
+                    <a href="javascript:void(0);" class="quick_view-qty quick_view-qty-minus">
+                      <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 0.778479H1" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
                     <input type="number" id="Quantity" name="quantity" value="1" min="1" max="{{ current_variant.inventory_quantity }}" step="1" class="quantity-selector product-form__input" pattern="[0-9]*">
-                    <a href="javascript:void(0);" class="quick_view-qty quick_view-qty-plus">+</a>
+                    <a href="javascript:void(0);" class="quick_view-qty quick_view-qty-plus">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.99992 1V12.9886" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13 6.99454H1" stroke="#BFBFBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
                   </div>
                   {% else %}
                     <input type="hidden" id="Quantity" name="quantity" value="1" min="1" max="{{ current_variant.inventory_quantity }}" step="1"pattern="[0-9]*">
@@ -276,7 +348,11 @@
                   <span class="loading d-none"><i class="fa fa-spin"></i></span>
                 </div>
                 <div class="product-form__item product-form__item--submit" {% unless current_variant.available == false %}style="display: block;"{% else %}style="display: none;"{% endunless %}>
-                  <button data-handle="{{ product.handle }}" type="submit" name="add" id="AddToCart" class="btnAddToCart btn product-form__cart-submit">
+                  <button data-handle="{{ product.handle }}" type="submit" name="add" id="AddToCart" class="text-capitalize btnAddToCart btn product-form__cart-submit site-button button_L">
+                    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.7729 7.80504V4.77304C13.7729 2.68904 12.0839 1.00004 10.0009 1.00004C7.91694 0.991036 6.21994 2.67204 6.21094 4.75604V4.77304V7.80504" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7422 19.5004H5.25778C2.90569 19.5004 1 17.5954 1 15.2454V9.72937C1 7.37937 2.90569 5.47437 5.25778 5.47437H14.7422C17.0943 5.47437 19 7.37937 19 9.72937V15.2454C19 17.5954 17.0943 19.5004 14.7422 19.5004Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>                      
                     {% if current_variant.inventory_policy == 'continue' and current_variant.inventory_quantity < 1 %}
                       <span id="AddToCartText">{{ 'products.product.pre_order' | t }}</span>
                     {% else %}
@@ -284,27 +360,37 @@
                     {% endif %}
                   </button>
                 </div>
-              </div>
 
-              <div class="product_option_sub">
-                {% if settings.payment_button_enable %}
-                  <div class="product-form__item product-form__item--checkout"{% if current_variant.available == false %} disabled{% endif %}>
-                    {% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
-                    {{ form | payment_button }}
-                    {% endform %}
-                  </div>
-                {% endif %}
+                <div class="productWishList">
+                  <a class="wishlist btnProductWishlist d-flex align-items-center" data-icon-wishlist href="#" data-product-handle="{{ product.handle }}" data-id="{{ product.id | json }}">
+                    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1.87187 9.59832C0.798865 6.24832 2.05287 2.41932 5.56987 1.28632C7.41987 0.689322 9.46187 1.04132 10.9999 2.19832C12.4549 1.07332 14.5719 0.693322 16.4199 1.28632C19.9369 2.41932 21.1989 6.24832 20.1269 9.59832C18.4569 14.9083 10.9999 18.9983 10.9999 18.9983C10.9999 18.9983 3.59787 14.9703 1.87187 9.59832Z" stroke="#3F4D6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M15 4.69995C16.07 5.04595 16.826 6.00095 16.917 7.12195" stroke="#3F4D6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
+            </div>
 
-              {% if section.settings.show_payments %}
-                <div class="product-page-info__payments product-page-info__field d-flex flex-column align-items-start mt-40 mb-10">
-                  <label class="mb-6 text-uppercase" style="{% if section.settings.color_title_payments != blank %}color: {{ section.settings.color_title_payments }};{% endif %}{% if section.settings.size_title != blank %}font-size: {{ section.settings.size_title }}"{% endif %}>{{ section.settings.title_payments }}</label>
-                  <div class="payments overflow-hidden">
-                    <img class="lazyload" data-src="{{ section.settings.payments | img_url: '700x' }}" alt="Payments">
-                  </div>
+            <div class="product_option_sub">
+              {% if settings.payment_button_enable %}
+                <div class="product-form__item product-form__item--checkout"{% if current_variant.available == false %} disabled{% endif %}>
+                  {% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
+                  {{ form | payment_button }}
+                  {% endform %}
                 </div>
               {% endif %}
             </div>
+
+            {% if section.settings.show_payments %}
+              <div class="product-page-info__payments product-page-info__field d-flex flex-column align-items-start mt-40 mb-10">
+                <label class="mb-6 text-uppercase" style="{% if section.settings.color_title_payments != blank %}color: {{ section.settings.color_title_payments }};{% endif %}{% if section.settings.size_title != blank %}font-size: {{ section.settings.size_title }}"{% endif %}>{{ section.settings.title_payments }}</label>
+                <div class="payments overflow-hidden">
+                  <img class="lazyload" data-src="{{ section.settings.payments | img_url: '700x' }}" alt="Payments">
+                </div>
+              </div>
+            {% endif %}
+
           </form>
           {% if settings.wishlist_enable %}
             <div class="productWishList">
@@ -340,6 +426,8 @@
                 {% endif %}
             </div>
           {% endif %}
+
+          {% comment %}
           <div class="shiping">
             {% if section.settings.time != blank %}
               <div class="shiping_time d-flex align-items-center" style="{% if section.settings.color_time != blank %}color: {{ section.settings.color_time }};{% endif %}{% if section.settings.size_time != blank %}font-size: {{ section.settings.size_time }}"{% endif %}>
@@ -353,7 +441,8 @@
                 <span>{{ section.settings.truck | nofilter }}</span>
               </div>
             {% endif %}
-            </div>
+          </div>
+        {% endcomment %}
           </div>
         </div>
       </div>
@@ -431,3 +520,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('.btn_truncatewords a').on('click', function() {
+      $(this).parents('.truncatewords').css('display', 'none');
+      $('.view-all').css('display', 'block');
+    });
+    $('.btn_view-all a').on('click', function() {
+      $(this).parents('.view-all').css('display', 'none');
+      $('.truncatewords').css('display', 'block');
+    });
+
+    $('.subscribe-wrap input[type=radio]').on('change', function() {
+      var price = $(this).data('price');
+      $(".product-template__container .discount-price").text(price);
+    });
+  });
+</script>
