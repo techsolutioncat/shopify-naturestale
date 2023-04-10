@@ -179,6 +179,11 @@ itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id 
         "default": true
       },
       {
+        "type": "image_picker",
+        "id": "tab_bg_image",
+        "label": "Tab background image"
+      },
+      {
         "type": "text",
         "id": "title_payments",
         "label": "Title payments",
@@ -244,6 +249,40 @@ itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id 
       }
     ],
     "blocks": [
+      {
+        "type": "tab_title",
+        "name": "Heading",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Tab title"
+          },
+          {
+            "type": "color",
+            "id": "color",
+            "label": "color",
+            "default": "#fff"
+          }
+        ]
+      },
+      {
+        "type": "tab_icon",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "richtext",
+            "id": "label",
+            "label": "label"
+          }
+        ]
+      },
       {
         "type": "block_text",
         "name": "Block Text",
