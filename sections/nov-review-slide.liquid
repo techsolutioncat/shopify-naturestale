@@ -403,8 +403,9 @@
 <!-- Initialize Swiper -->
 <script>
   $(document).ready(function () {
-    var swiper = new Swiper('.mySwiper', {
+    var mySwiper = new Swiper('.mySwiper', {
       slidesPerView: 3.2,
+      loop: true,
       grid: {
         rows: 2,
       },
@@ -439,6 +440,10 @@
           spaceBetween: 24,
         },
       },
+    });
+
+    $('#shopify-section-{{ section.id }} .swiper-button-prev').on('click', function () {
+      mySwiper.update(true);
     });
   });
 </script>

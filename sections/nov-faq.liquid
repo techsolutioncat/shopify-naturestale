@@ -1,0 +1,292 @@
+{% style %}
+    #shopify-section-{{ section.id }} .tab-container {
+      position: relative;
+      background: #FFFFFF;
+      border-radius: 15px;
+      padding: 20px;
+    }
+    #shopify-section-{{ section.id }} .heading {
+      color: {{ section.settings.heading_color }};
+    }
+    #shopify-section-{{ section.id }} .cover-image {
+      position: absolute;
+      width: 100%;
+      margin-top: -250px;
+      z-index: -1;
+    }
+    #shopify-section-{{ section.id }} .cover-image img {
+      object-fit: cover;
+      width: 100%;
+    }
+    @media (max-width: 1200px) {
+      #shopify-section-nov-faq .cover-image {
+        margin-top: -170px;
+      }
+    }
+    @media (max-width: 500px) {
+      #shopify-section-nov-faq .cover-image {
+        margin-top: -74px;
+      }
+    }
+
+    /* FAQ css */
+    #shopify-section-{{ section.id }} .tab-content {
+    margin: 0 auto;
+    width: 100%;
+    padding: 0px 30px;
+  }
+
+  #shopify-section-{{ section.id }} .accordion .accordion-item {
+    border-bottom: 1px solid #BFBFBF;
+  }
+
+  #shopify-section-{{ section.id }} .accordion .accordion-item button[aria-expanded='true'] {
+  }
+
+  #shopify-section-{{ section.id }} .accordion button {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    padding: 20px 0px;
+    color: {{ section.settings.question_color }};
+    font-size: 1.15rem;
+    font-weight: 400;
+    border: none;
+    background: none;
+    outline: none;
+  }
+
+  #shopify-section-{{ section.id }} .accordion button .accordion-title {
+  }
+
+  #shopify-section-{{ section.id }} .accordion button .icon {
+    display: inline-block;
+    position: absolute;
+    top: 18px;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid;
+    border-radius: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .accordion button .icon::before {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 9px;
+    left: 5px;
+    width: 10px;
+    height: 2px;
+    background: currentColor;
+  }
+  #shopify-section-{{ section.id }} .accordion button .icon::after {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 5px;
+    left: 9px;
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+  }
+  #shopify-section-{{ section.id }} .accordion button[aria-expanded='true'] .icon::after {
+    width: 0;
+  }
+  #shopify-section-{{ section.id }} .accordion button[aria-expanded='true'] + .accordion-content {
+    opacity: 1;
+    max-height: 100%;
+    transition: all 200ms linear;
+    will-change: opacity, max-height;
+    margin-bottom: 20px;
+  }
+  #shopify-section-{{ section.id }} .accordion .accordion-content {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 200ms linear, max-height 200ms linear;
+    will-change: opacity, max-height;
+  }
+  #shopify-section-{{ section.id }} .accordion .accordion-content p {
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 2em 0;
+  }
+{% endstyle %}
+
+<div class="section-content">
+  {%- if section.settings.background_image != blank -%}
+    <div class="cover-image">
+      <img src="{{ section.settings.background_image | image_url: width: 2000 }}">
+    </div>
+  {%- endif -%}
+  <div class="container tab-container">
+    {% if section.settings.heading != blank %}
+      <div class="heading">
+        <p class="h3 font-600 text-center">{{ section.settings.heading }}</p>
+      </div>
+    {% endif %}
+
+    {% assign tabArr = '' %}
+    {% assign symbol = '!@#$%^&*()' %}
+
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        {% assign tabArr = tabArr | append: block.settings.tab | append: symbol %}
+      {% endfor %}
+      {% assign tabArr = tabArr | split: symbol %}
+      {% assign tabArr = tabArr | uniq | join: symbol %}
+    {% endif %}
+
+    {% if tabArr != blank %}
+      {% assign tabArr = tabArr | split: symbol %}
+    {% endif %}
+    <div class="product-single__tabs wow fadeInUp  animated" style="visibility: visible; animation-name: fadeInUp;">
+      <div class="block_nav">
+        <ul class="nav nav-tabs">
+          {% if tabArr.size > 0 %}
+            {% for tab in tabArr %}
+              <li>
+                <a
+                  class="{% if forloop.index == 1%} active {% endif %} font-600 h5 lh-21"
+                  href="#faqTab{{ forloop.index }}"
+                  data-toggle="tab"
+                >
+                  {{- tab -}}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+      <div class="tab-content">
+        {% if tabArr.size > 0 %}
+          {% for tab in tabArr %}
+            <div
+              class="tab-pane {% if forloop.index == 1%} active {% endif %} h6 font-400 lh-24"
+              id="faqTab{{ forloop.index }}"
+            >
+              <div class="accordion">
+                {% for block in section.blocks %}
+                  {% if tab == block.settings.tab %}
+                    <div class="accordion-item">
+                      <button id="accordion-button-1" aria-expanded="false">
+                        <span class="accordion-title lh-21 font-600 h5 mb-0">{{ block.settings.title }}</span>
+                        <img src="{{ 'PaperPlus.png' | asset_url }}">
+                      </button>
+                      <div class="accordion-content">
+                        <div class="font-400 lh-24 h6">
+                          {{ block.settings.text }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vinova FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Title settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "header",
+      "content": "Color settings"
+    },
+    {
+      "type": "color",
+      "id": "tab_color",
+      "label": "Tab color"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question color"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_text",
+      "name": "Block text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab",
+          "label": "Tab"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vinova FAQ"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  const items = document.querySelectorAll('.accordion button');
+
+  function toggleAccordion() {
+    const itemToggle = this.getAttribute('aria-expanded');
+
+    for (i = 0; i < items.length; i++) {
+      items[i].setAttribute('aria-expanded', 'false');
+    }
+
+    if (itemToggle == 'false') {
+      this.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  items.forEach((item) => item.addEventListener('click', toggleAccordion));
+</script>

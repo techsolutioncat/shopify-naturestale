@@ -24,6 +24,7 @@
   .template-product .cover-image {
     position: absolute;
     width: 100%;
+    margin-top: 40px;
   }
   .template-product .cover-image img {
     object-fit: cover;
@@ -32,9 +33,24 @@
   .template-product .tab-head-container {
     position: relative;
   }
+  @media(max-width: 1200px) {
+    .template-product .cover-image {
+      margin-top: 100px;
+    }
+  }
+  @media(max-width: 991px) {
+    .template-product .cover-image {
+      margin-top: 210px;
+    }
+  }
   @media(max-width: 600px) {
     .template-product .tab-icons {
       gap: 15px;
+    }
+  }
+  @media(max-width: 400px) {
+    .template-product .cover-image {
+      margin-top: 363px;
     }
   }
 {%- endstyle -%}
@@ -260,14 +276,14 @@
             </div>
           </div>
 
-          <form class="subscribe-wrap">
+          {% comment %} <form class="subscribe-wrap">
             <div class="subscribe saveoff">
               <input type="radio" name="default" id="subscribe" data-price="{{ product.price | times: 0.9 | money}}" checked><label for="subscribe" class="radio-label h5 font-600">Subscribe & Save 10% Off</label>
             </div>
             <div class="subscribe onetime">
               <input type="radio" name="default" id="onetime" data-price="{{ product.price | money }}"><label for="onetime" class="radio-label h5 font-600">One Time Purchase</label>
             </div>
-          </form>
+          </form> {% endcomment %}
           <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form-{{ section.id }}" class="product-form product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}" data-section="{{ section.id }}"> 
             <input id="variant_id" type="hidden" name="id" value="{{current_variant.id}}" />
             <div class="items_var">
@@ -601,9 +617,9 @@
       $('.truncatewords').css('display', 'block');
     });
 
-    $('.subscribe-wrap input[type=radio]').on('change', function() {
+    {% comment %} $('.subscribe-wrap input[type=radio]').on('change', function() {
       var price = $(this).data('price');
       $(".product-template__container .discount-price").text(price);
-    });
+    }); {% endcomment %}
   });
 </script>

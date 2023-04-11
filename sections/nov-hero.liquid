@@ -36,9 +36,10 @@
     color: {{ section.settings.heading_color }};
   }
   #shopify-section-{{ section.id }} .link-wrap {
-    background-image: url({{ 'circle.png' | asset_url }});
+    /* background-image: url({{ 'circle.png' | asset_url }});
     background-size: contain;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    position: relative;
     min-width: 314px;
     min-height: 314px;
     display: flex;
@@ -49,11 +50,114 @@
 
   #shopify-section-{{ section.id }} .nav-text {
     color: {{ section.settings.nav-text_color }};
-    margin-top: 12px;
+    margin-top: 25px;
   }
   #shopify-section-{{ section.id }} .section-content {
     margin-bottom: 60px;
   }
+
+  /* Begin loading style */
+  #shopify-section-{{ section.id }} .circle-loader {
+    margin: 0 0 30px 10px;
+    border: 1px solid #D9D9D9;
+    position: absolute;
+  }
+  #shopify-section-{{ section.id }} .status{
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    animation-name: loader-spin;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -2px;
+    margin-top: -2px;
+  }
+  #shopify-section-{{ section.id }} .circle-loader,
+  #shopify-section-{{ section.id }} .status {
+    border-radius: 50%;
+    min-width: 314px;
+    min-height: 314px;
+  }
+
+  #shopify-section-{{ section.id }} .status::before {
+    position: absolute;
+    top: 42px;
+    left: 42px;
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  @keyframes loader-spin {
+      0% {
+          transform: rotate(0deg);
+      }
+
+      100% {
+          transform: rotate(360deg);
+      }
+  }
+
+  @keyframes checkmark {
+      0% {
+          height: 0;
+          width: 0;
+          opacity: 1;
+      }
+
+      20% {
+          height: 0;
+          width: 2em;
+          opacity: 1;
+      }
+
+      40% {
+          height: 4em;
+          width: 2em;
+          opacity: 1;
+      }
+
+      100% {
+          height: 4em;
+          width: 2em;
+          opacity: 1;
+      }
+  }
+
+  @keyframes crossmark {
+      0% {
+          height: 0;
+          width: 0;
+          opacity: 1;
+      }
+
+      20% {
+          height: 0;
+          width: 2em;
+          opacity: 1;
+      }
+
+      40% {
+          height: 2em;
+          width: 2em;
+          opacity: 1;
+      }
+
+      100% {
+          height: 2em;
+          width: 2em;
+          opacity: 1;
+      }
+  }
+  /* End loading style */
+
   @media(max-width: 999px) {
     #shopify-section-{{ section.id }} .section-content.h_L {
       height: 650px;
@@ -64,9 +168,15 @@
     #shopify-section-{{ section.id }} .section-content.h_S {
       height: 380px;
     }
-    #shopify-section-{{ section.id }} .link-wrap {
+    #shopify-section-{{ section.id }} .link-wrap,
+    #shopify-section-{{ section.id }} .circle-loader,
+    #shopify-section-{{ section.id }} .status {
       min-width: 250px;
       min-height: 250px;
+    }
+    #shopify-section-{{ section.id }} .status::before {
+      top: 33px;
+      left: 33px;
     }
   }
   @media(max-width: 500px) {
@@ -79,9 +189,15 @@
     #shopify-section-{{ section.id }} .section-content.h_S {
       height: 400px;
     }
-    #shopify-section-{{ section.id }} .link-wrap {
+    #shopify-section-{{ section.id }} .link-wrap,
+    #shopify-section-{{ section.id }} .circle-loader,
+    #shopify-section-{{ section.id }} .status {
       min-width: 200px;
       min-height: 200px;
+    }
+    #shopify-section-{{ section.id }} .status::before {
+      top: 25px;
+      left: 25px;
     }
     #shopify-section-{{ section.id }} .section-content .page-width {
       gap: 18px;
@@ -107,17 +223,22 @@
       {% endif %}
     </div>
     <div class="link-wrap">
-      {% if section.settings.button_text != blank %}
-        <a
-          class="font-700 text-uppercase font-700 hero-button site-button button_L"
-          href="{{ section.settings.button_link }}"
-        >
-          {{- section.settings.button_text -}}
-        </a>
-      {% endif %}
-      {% if section.settings.nav_text != blank %}
-        <p class="nav-text h6 font-300">{{ section.settings.nav_text }}</p>
-      {% endif %}
+      <div class="circle-loader">
+        <div class="status draw"></div>
+      </div>
+      <div class="hero-button-group">
+        {% if section.settings.button_text != blank %}
+          <a
+            class="font-700 text-uppercase font-700 hero-button site-button button_L"
+            href="{{ section.settings.button_link }}"
+          >
+            {{- section.settings.button_text -}}
+          </a>
+        {% endif %}
+        {% if section.settings.nav_text != blank %}
+          <p class="nav-text h6 font-300">{{ section.settings.nav_text }}</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
@@ -220,3 +341,11 @@
   ]
 }
 {% endschema %}
+
+<script>
+  $('#shopify-section-{{ section.id }} .background-video video').on('loadstart', function () {
+    setTimeout(function () {
+      $('#shopify-section-{{ section.id }} .circle-loader').addClass('hide');
+    }, 2000);
+  });
+</script>
