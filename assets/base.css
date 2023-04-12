@@ -108,10 +108,16 @@ nav#AccessibleNav .site-nav {
   padding: 30px;
 }
 
-.header-mobile .item-mobile-top i {
+.header-mobile .item-mobile-top i,
+.btn_toggle_nav {
   color: #fff;
 }
 
+.site-header .order_btn:hover,
+.site-button
+{
+  background: linear-gradient(#ff8a32,#f86a00) !important;
+}
 /* Footer style css */
 body:not(.template-index) .nov-footer {
   border-top: none !important;

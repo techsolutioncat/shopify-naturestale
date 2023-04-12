@@ -1,5 +1,8 @@
 {% style %}
   /* image graou */
+  #shopify-section-{{ section.id }} .section-content {
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
   #shopify-section-{{ section.id }} .container {
     display: flex;
     justify-content: space-between;
@@ -90,6 +93,8 @@
     z-index: -1;
     position: relative;
     margin-top: -400px;
+    position: absolute;
+    width: 100%;
   }
   #shopify-section-{{ section.id }} .bottom-image img {
     width: 100%;
@@ -134,6 +139,11 @@
     }
     #shopify-section-{{ section.id }} .bottom-image {
       margin-top: -90px;
+    }
+  }
+  @media (max-width: 500px) {
+    #shopify-section-{{ section.id }} .section-content {
+      padding-bottom: 0px;
     }
   }
 {% endstyle %}
@@ -446,6 +456,16 @@
       "type": "url",
       "id": "button_link",
       "label": "Button text"
+    },
+    {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 20
     }
   ],
   "blocks": [

@@ -95,6 +95,21 @@
       height: 560px;
     }
   }
+  @media (max-width: 999px) {
+    #shopify-section-{{ section.id }} .text-box .heading {
+      color: {{ section.settings.mob_heading_color }};
+      line-height: 40px;
+      margin-bottom: 20px;
+    }
+    #shopify-section-{{ section.id }} .text-box .text {
+      color: {{ section.settings.mob_text_color }};
+      line-height: 22px;
+    }
+    #shopify-section-{{ section.id }} .text-box {
+      background: #fff;
+      padding: 25px;
+    }
+  }
   @media (max-width: 767px) {
     #shopify-section-{{ section.id }} .second-textbox {
       height: 100%;
@@ -204,7 +219,12 @@
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading color"
+      "label": "Desktop Heading color"
+    },
+    {
+      "type": "color",
+      "id": "mob_heading_color",
+      "label": "Mobile heading color"
     },
     {
       "type": "richtext",
@@ -215,6 +235,11 @@
       "type": "color",
       "id": "text_color",
       "label": "Text color"
+    },
+    {
+      "type": "color",
+      "id": "mob_text_color",
+      "label": "Mobile text color"
     },
     {
       "type": "text",

@@ -27,15 +27,15 @@
               {{ form.errors | default_errors }}
           
               <div class="first-name">
-                <input type="text" name="contact[first_name]" id="first-name" placeholder="Your name*">
+                <input type="text" name="contact[first_name]" id="first-name" placeholder="Your name*" required>
               </div>
           
               <div class="last-name">
-                <input type="text" name="contact[last_name]" id="last-name" placeholder="Your Last name*">
+                <input type="text" name="contact[last_name]" id="last-name" placeholder="Your Last name*" required>
               </div>
           
               <div class="email">
-                <input type="email" name="contact[email]" id="email" placeholder="Email*">
+                <input type="email" name="contact[email]" id="email" placeholder="Email*" required>
               </div>
           
               <div class="submit">
