@@ -417,7 +417,7 @@
                     {% endif %}
                   </button>
                 </div>
-
+                {% if settings.wishlist_enable %}
                 <div class="productWishList">
                   <a class="wishlist btnProductWishlist d-flex align-items-center" data-icon-wishlist href="#" data-product-handle="{{ product.handle }}" data-id="{{ product.id | json }}">
                     <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -426,6 +426,7 @@
                     </svg>
                   </a>
                 </div>
+                {% endif %}
               </div>
             </div>
 

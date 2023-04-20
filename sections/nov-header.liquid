@@ -23,7 +23,7 @@
             </a>
           {% else %}
             {% comment %} <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a> {% endcomment %}
-            <a href="/" class="site-header__logo d-inline-block img-fluid position-relative">
+            <a href="/" class="site-header__logo-link d-inline-block img-fluid position-relative">
               <svg width="89" height="110" viewBox="0 0 89 110" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.88315 78.8157H10.2845V93.7129H6.88315L3.40132 86.5289V93.7129H0V78.8157H3.40132H3.42145L6.88315 86.305V78.8157Z" fill="white"/>
                 <path d="M21.8957 93.6925L21.4731 92.0644H16.3409L15.9182 93.6925H12.3962L16.361 78.8157H21.4529L25.4178 93.6925H21.8957ZM17.1258 89.1542H20.6881L18.8969 82.4383L17.1258 89.1542Z" fill="white"/>
@@ -43,9 +43,76 @@
             </a>
           {% endif %}
         </div>
-        <div id="mobile_search">
-          {% include 'nov-formsearch-inline' %}
-        </div>
+        {% if section.settings.visible_mobile_search %}
+          <div id="mobile_search">
+            {% include 'nov-formsearch-inline' %}
+          </div>
+        {% else %}
+          <div class="col-xl-4 col-lg-4 col-md-6 d-flex align-items-center justify-content-end header-icons">
+            <div class="search__btn-overlay icon">
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9.98856" cy="9.98856" r="8.98856" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16.2402 16.707L19.7643 20.2219" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contentsticky_account">
+              {% if settings.account_type == 'dropdown' %}
+                <div class="site-header_myaccount dropdown icon">
+                  <div class="myaccount-title dropdown-toggle text-center d-flex" data-toggle="dropdown">
+                    <a
+                      class="myaccount"
+                      href="{{ shop.secure_url }}/account"
+                      rel="nofollow"
+                      title="{{ 'layout.customer.account' | t }}"
+                    >
+                      <i class="fa fa-bars" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                  {% include 'nov-block-account' %}
+                </div>
+              {% else %}
+                <div class="site-header_myaccount account_canvas icon">
+                  <a href="/account" class="myaccount" title="{{ 'layout.customer.account' | t }}">
+                    {%- comment -%}<i class="icon-settings"></i>{%- endcomment -%}
+                    <svg width="16" height="21" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.98493 13.5317C4.11731 13.5317 0.814453 14.1165 0.814453 16.4584C0.814453 18.8003 4.09636 19.406 7.98493 19.406C11.8525 19.406 15.1545 18.8203 15.1545 16.4794C15.1545 14.1384 11.8735 13.5317 7.98493 13.5317Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.98489 10.1914C10.523 10.1914 12.5801 8.13333 12.5801 5.59524C12.5801 3.05714 10.523 1 7.98489 1C5.44679 1 3.3887 3.05714 3.3887 5.59524C3.38013 8.12476 5.42394 10.1829 7.95251 10.1914H7.98489Z" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </div>
+                {% include 'nov-block-account' %}
+              {% endif %}
+            </div>
+            <div class="contentsticky_cart">
+              <div class="{% if settings.mini_cart_type == 'canvas' %}cart_canvas{% else %}cart_dropdown{% endif %}">
+                <div id="cart_block">
+                  <a href="/cart" class="header-cart d-flex align-items-center">
+                    <div class="site-header__cart">
+                      <span class="site-header__cart-icon icon">
+                        <svg width="37" height="35" viewBox="0 0 37 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.7729 21.805V18.773C13.7729 16.689 12.0839 15 10.0009 15C7.91694 14.991 6.21994 16.672 6.21094 18.756V18.773V21.805" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7422 33.5004H5.25778C2.90569 33.5004 1 31.5954 1 29.2454V23.7294C1 21.3794 2.90569 19.4744 5.25778 19.4744H14.7422C17.0943 19.4744 19 21.3794 19 23.7294V29.2454C19 31.5954 17.0943 33.5004 14.7422 33.5004Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <circle cx="26.5" cy="10.5" r="10.5" fill="#EA7503"/>
+                        </svg>
+                        <div class="num-cartcount">
+                          <span id="CartCount">{{ cart.item_count }}</span>
+                        </div>
+                      </span>
+                      {%- comment -%}
+                        <span id="_desktop_cart_count" class="site-header__cart-count">
+                          <span id="CartCount">{{ cart.item_count }}</span>
+                        </span>
+                      {%- endcomment -%}
+                    </div>
+                  </a>
+                  {% if settings.mini_cart_type != 'canvas' -%}
+                    <div id="_desktop_cart"><div id="cart-info"></div></div>
+                  {%- endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
         <div class="d-flex justify-content-end">
           <div id="show-megamenu" class="item-mobile-top"><i class="zmdi zmdi-view-headline"></i></div>
         </div>
@@ -59,7 +126,7 @@
               <i class="fa fa-bars" aria-hidden="true"></i>
             </div>
             {% if section.settings.logo %}
-              <a href="/" class="site-header__logo d-inline-block img-fluid position-relative">
+              <a href="/" class="site-header__logo-link d-inline-block img-fluid position-relative">
                 {%- assign image_size = section.settings.w_logo | append: 'x' -%}
                 <img
                   srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
@@ -74,7 +141,7 @@
             {% else %}
               <div class="h2 site-header__logo d-inline-block mb-0 position-relative">
                 {% comment %} <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a> {% endcomment %}
-                <a href="/" class="site-header__logo d-inline-block img-fluid position-relative">
+                <a href="/" class="site-header__logo-link d-inline-block img-fluid position-relative">
                   <svg width="89" height="110" viewBox="0 0 89 110" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6.88315 78.8157H10.2845V93.7129H6.88315L3.40132 86.5289V93.7129H0V78.8157H3.40132H3.42145L6.88315 86.305V78.8157Z" fill="white"/>
                     <path d="M21.8957 93.6925L21.4731 92.0644H16.3409L15.9182 93.6925H12.3962L16.361 78.8157H21.4529L25.4178 93.6925H21.8957ZM17.1258 89.1542H20.6881L18.8969 82.4383L17.1258 89.1542Z" fill="white"/>
@@ -122,20 +189,20 @@
                 </div>
               {% else %}
                 <div class="site-header_myaccount account_canvas icon">
-                  <div class="myaccount" title="{{ 'layout.customer.account' | t }}">
+                  <a href="/account" class="myaccount" title="{{ 'layout.customer.account' | t }}">
                     {%- comment -%}<i class="icon-settings"></i>{%- endcomment -%}
                     <svg width="16" height="21" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.98493 13.5317C4.11731 13.5317 0.814453 14.1165 0.814453 16.4584C0.814453 18.8003 4.09636 19.406 7.98493 19.406C11.8525 19.406 15.1545 18.8203 15.1545 16.4794C15.1545 14.1384 11.8735 13.5317 7.98493 13.5317Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M7.98489 10.1914C10.523 10.1914 12.5801 8.13333 12.5801 5.59524C12.5801 3.05714 10.523 1 7.98489 1C5.44679 1 3.3887 3.05714 3.3887 5.59524C3.38013 8.12476 5.42394 10.1829 7.95251 10.1914H7.98489Z" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                  </div>
+                  </a>
                 </div>
               {% endif %}
             </div>
             <div class="contentsticky_cart">
               <div class="{% if settings.mini_cart_type == 'canvas' %}cart_canvas{% else %}cart_dropdown{% endif %}">
                 <div id="cart_block">
-                  <div class="header-cart d-flex align-items-center">
+                  <a href="/cart" class="header-cart d-flex align-items-center">
                     <div class="site-header__cart">
                       <span class="site-header__cart-icon icon">
                         <svg width="37" height="35" viewBox="0 0 37 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -153,10 +220,10 @@
                         </span>
                       {%- endcomment -%}
                     </div>
-                  </div>
-                  {% if settings.mini_cart_type != 'canvas' -%}
+                  </a>
+                  {% comment %} {% if settings.mini_cart_type != 'canvas' -%}
                     <div id="_desktop_cart"><div id="cart-info"></div></div>
-                  {%- endif %}
+                  {%- endif %} {% endcomment %}
                 </div>
               </div>
             </div>
@@ -273,6 +340,13 @@
       "id": "show_icons",
       "label": "Enable icon",
       "info": "Acitve Icon Menu",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "visible_mobile_search",
+      "label": "Visible mobile search",
+      "info": "Visible mobile search",
       "default": true
     },
     {
@@ -842,6 +916,17 @@
   .header-mobile .item-mobile-top {
     color: {{ section.settings.c_icon_m }};
   }
+  {% comment %} Custom account action {% endcomment %}
+  .block_cart_canvas #_desktop_cart.active {
+    display: none !important;
+  }
+  .sidebar-overlay.act {
+    visibility: hidden !important;
+  }
+  .block_account_canvas.active {
+    display: none !important;
+  }
+
   @media(max-width: 767px) {
     #shopify-section-nov-header {
       position: relative;
