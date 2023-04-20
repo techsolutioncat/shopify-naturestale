@@ -11,22 +11,22 @@
             <div class="cart__layout_left">
               <div class="cart__header d-xs-none">
                 <div class="row spacing-0">
-                  <div class="col-md-1 label_remove"></div>
-                  <div class="col-md-5 label_product">{{ 'cart.label.product' | t }}</div>
-                  <div class="col-md-2 label_price">{{ 'cart.label.price' | t }}</div>
-                  <div class="col-md-2 label_quantity">{{ 'cart.label.qty' | t }}</div>
-                  <div class="col-md-2 label_total">{{ 'cart.label.total' | t }}</div>
+                  <div class="col-1 col-md-1 label_remove"></div>
+                  <div class="col-3 col-md-5 label_product">{{ 'cart.label.product' | t }}</div>
+                  <div class="col-2 col-md-2 label_price">{{ 'cart.label.price' | t }}</div>
+                  <div class="col-4 col-md-2 label_quantity">{{ 'cart.label.qty' | t }}</div>
+                  <div class="col-2 col-md-2 label_total">{{ 'cart.label.total' | t }}</div>
                 </div>
               </div>
               <div class="cart__body">
                 {% for item in cart.items %}
                   <div class="row spacing-0 align-items-center line{{ forloop.index }} cart-flex cart_item">
-                    <div class="col-md-1 cart__remove-wrapper text-center mb-xs-20">
+                    <div class="col-1 col-md-1 cart__remove-wrapper text-center mb-xs-20">
                       <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                       </a>
                     </div>
-                    <div class="col-md-5 cart__image-wrapper d-flex align-items-center mb-xs-20">
+                    <div class="col-3 col-md-5 cart__image-wrapper d-flex align-items-center mb-xs-20">
                       <a href="{{ item.url | within: collections.all }}">
                         <img class="cart__image lazyload" data-src="{{ item | img_url: '90x' }}" alt="{{ item.title | escape }}">
                       </a>
@@ -65,21 +65,21 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-2 cart__price-wrapper mb-xs-20">
+                    <div class="col-2 col-md-2 cart__price-wrapper mb-xs-20">
                       <div class="hidden">{{ 'cart.label.price' | t }}</div>
                       <div>{{ item.price | money }}</div>
                       {% for discount in item.discounts %}
                         <div class="cart-item__discount d-md-none">{{ discount.title }}</div>
                       {% endfor %}
                     </div>
-                    <div class="col-md-2 cart__update-wrapper mb-xs-20">
+                    <div class="col-4 col-md-2 cart__update-wrapper mb-xs-20">
                       <div class="cart__qty">
                         <input type="button" class="js-qty__adjust minus js-qty__adjust--minus" value="-" />
                         <input class="cart__qty-input" data-price="{{ item.price }}" data-line="{{ forloop.index }}" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" step="1" min="1" max="{{ item.variant.inventory_quantity }}" pattern="[0-9]*">
                       	<input type="button" class="js-qty__adjust plus js-qty__adjust--plus" value="+" /> 
                       </div>
                     </div>
-                    <div class="col-md-2 total">
+                    <div class="col-2 col-md-2 total">
                       <div class="hidden">{{ 'cart.label.total' | t }}</div>
                       {% if item.original_line_price != item.line_price %}
                         <div class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></div>

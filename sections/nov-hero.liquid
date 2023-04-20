@@ -1,12 +1,15 @@
 {% style %}
   #shopify-section-{{ section.id }} .section-content.h_L {
-    height: 860px;
+    min-height: 860px;
+    height: 100vh;
   }
   #shopify-section-{{ section.id }} .section-content.h_M {
-    height: 680px;
+    height: 80vh;
+    min-height: 680px;
   }
   #shopify-section-{{ section.id }} .section-content.h_S {
-    height: 500px;
+    height: 70vh;
+    min-height: 500px;
   }
   #shopify-section-{{ section.id }} .section-content {
     position: relative;
@@ -160,13 +163,13 @@
 
   @media(max-width: 999px) {
     #shopify-section-{{ section.id }} .section-content.h_L {
-      height: 650px;
+      min-height: 650px;
     }
     #shopify-section-{{ section.id }} .section-content.h_M {
-      height: 450px;
+      min-height: 450px;
     }
     #shopify-section-{{ section.id }} .section-content.h_S {
-      height: 380px;
+      min-height: 380px;
     }
     #shopify-section-{{ section.id }} .link-wrap,
     #shopify-section-{{ section.id }} .circle-loader,
@@ -181,13 +184,13 @@
   }
   @media(max-width: 500px) {
     #shopify-section-{{ section.id }} .section-content.h_L {
-      height: 490px;
+      min-height: 490px;
     }
     #shopify-section-{{ section.id }} .section-content.h_M {
-      height: 450px;
+      min-height: 450px;
     }
     #shopify-section-{{ section.id }} .section-content.h_S {
-      height: 400px;
+      min-height: 400px;
     }
     #shopify-section-{{ section.id }} .link-wrap,
     #shopify-section-{{ section.id }} .circle-loader,
@@ -201,6 +204,9 @@
     }
     #shopify-section-{{ section.id }} .section-content .page-width {
       gap: 18px;
+    }
+    #shopify-section-{{ section.id }} .section-content .title-box {
+      margin-top: 125px;
     }
   }
 {% endstyle %}
@@ -276,7 +282,8 @@
         }
       ],
       "label": "Background Height",
-      "default": "h_L"
+      "default": "h_L",
+      "info": "L: 100vh, M: 80vh, S: 70vh"
     },
     {
       "type": "header",
@@ -343,9 +350,9 @@
 {% endschema %}
 
 <script>
-  $('#shopify-section-{{ section.id }} .background-video video').on('loadstart', function () {
+  {% comment %} $('#shopify-section-{{ section.id }} .background-video video').on('loadstart', function () {
     setTimeout(function () {
       $('#shopify-section-{{ section.id }} .circle-loader').addClass('hide');
     }, 2000);
-  });
+  }); {% endcomment %}
 </script>
